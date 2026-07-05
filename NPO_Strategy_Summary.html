@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NPO Platform Strategy — Team Briefing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --navy:    #1B2B4B;
+    --teal:    #0096A0;
+    --teal-lt: #E0F4F5;
+    --amber:   #E07B00;
+    --amber-lt:#FFF4E0;
+    --red:     #C0392B;
+    --red-lt:  #FEF0EE;
+    --green:   #1A7A4A;
+    --green-lt:#E5F5EC;
+    --slate:   #475569;
+    --border:  #DDE3EE;
+    --bg:      #F4F7FC;
+    --white:   #FFFFFF;
+    --text:    #1E293B;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  /* ─── TOP HERO ─────────────────────────────────────── */
+  .hero {
+    background: linear-gradient(135deg, #1B2B4B 0%, #0D5C63 100%);
+    color: #fff;
+    padding: 56px 40px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    right: -80px;
+    top: -80px;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    border: 60px solid rgba(0,150,160,0.18);
+    pointer-events: none;
+  }
+  .hero-label {
+    display: inline-block;
+    background: rgba(0,150,160,0.35);
+    color: #7CF5FF;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(28px, 4vw, 46px);
+    font-weight: 700;
+    line-height: 1.15;
+    max-width: 720px;
+    margin-bottom: 18px;
+  }
+  .hero h1 span { color: #5EEEF5; }
+  .hero-sub {
+    font-size: 15px;
+    color: rgba(255,255,255,0.72);
+    max-width: 580px;
+    margin-bottom: 32px;
+  }
+  .hero-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .pill {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 5px 14px;
+    border-radius: 20px;
+  }
+
+  /* ─── NAV ───────────────────────────────────────────── */
+  .top-nav {
+    background: var(--navy);
+    padding: 0 40px;
+    display: flex;
+    gap: 2px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .top-nav::-webkit-scrollbar { display: none; }
+  .top-nav a {
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 12px 16px;
+    white-space: nowrap;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+  }
+  .top-nav a:hover { color: #5EEEF5; border-color: #5EEEF5; }
+
+  /* ─── LAYOUT ────────────────────────────────────────── */
+  .page-wrap { max-width: 1120px; margin: 0 auto; padding: 48px 32px; }
+
+  /* ─── SECTION HEADER ────────────────────────────────── */
+  .section-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+    padding-top: 16px;
+  }
+  .section-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .section-head h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--navy);
+  }
+  .section-head p {
+    font-size: 13px;
+    color: var(--slate);
+    margin-top: 2px;
+  }
+  .divider { border: none; border-top: 2px solid var(--border); margin: 48px 0; }
+
+  /* ─── CARDS ─────────────────────────────────────────── */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; margin-bottom: 24px; }
+  .card-grid-3 { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 24px;
+    position: relative;
+  }
+  .card-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: block;
+  }
+  .card h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--navy);
+  }
+  .card p { font-size: 13.5px; color: var(--slate); }
+
+  /* ─── STATUS BADGES ─────────────────────────────────── */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+  }
+  .badge-green { background: var(--green-lt); color: var(--green); }
+  .badge-amber { background: var(--amber-lt); color: var(--amber); }
+  .badge-red   { background: var(--red-lt);   color: var(--red);   }
+  .badge-teal  { background: var(--teal-lt);  color: var(--teal);  }
+  .badge::before { font-size: 8px; }
+  .badge-green::before { content: '●'; }
+  .badge-amber::before { content: '▲'; }
+  .badge-red::before   { content: '✕'; }
+  .badge-teal::before  { content: '★'; }
+
+  /* ─── DECISION CARDS ────────────────────────────────── */
+  .decision-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-left: 5px solid var(--teal);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 14px;
+    display: grid;
+    grid-template-columns: 32px 1fr auto;
+    gap: 16px;
+    align-items: start;
+  }
+  .decision-card.warn { border-left-color: var(--amber); }
+  .decision-card.danger { border-left-color: var(--red); }
+  .dec-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--border);
+    line-height: 1;
+    margin-top: 2px;
+  }
+  .dec-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 5px;
+  }
+  .dec-body { font-size: 13.5px; color: var(--slate); }
+  .dec-body strong { color: var(--text); }
+
+  /* ─── STACK GRID ────────────────────────────────────── */
+  .stack-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--white);
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    font-size: 14px;
+  }
+  .stack-table th {
+    background: var(--navy);
+    color: rgba(255,255,255,0.85);
+    padding: 12px 18px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .stack-table td { padding: 13px 18px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .stack-table tr:last-child td { border-bottom: none; }
+  .stack-table tr:hover td { background: #F8FAFF; }
+  .stack-role { font-weight: 600; color: var(--navy); white-space: nowrap; }
+  .stack-pick { font-weight: 700; color: var(--teal); }
+  .stack-why { color: var(--slate); font-size: 13px; }
+
+  /* ─── GATEWAY TABLE ─────────────────────────────────── */
+  .gw-table { width: 100%; border-collapse: collapse; background: var(--white); border-radius: 14px; overflow: hidden; border: 1px solid var(--border); font-size: 13.5px; }
+  .gw-table th { background: #F1F5FF; color: var(--navy); padding: 11px 16px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; text-align: left; border-bottom: 2px solid var(--border); }
+  .gw-table td { padding: 12px 16px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  .gw-table tr:last-child td { border-bottom: none; }
+  .gw-name { font-weight: 700; color: var(--navy); }
+  .tick { color: var(--green); font-size: 16px; }
+  .cross { color: var(--red); font-size: 16px; }
+  .warn-icon { color: var(--amber); font-size: 14px; }
+
+  /* ─── RISK GRID ─────────────────────────────────────── */
+  .risk-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+  }
+  .risk-card.high { border-top: 4px solid var(--red); }
+  .risk-card.med  { border-top: 4px solid var(--amber); }
+  .risk-card.low  { border-top: 4px solid var(--teal); }
+  .risk-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; gap: 8px; }
+  .risk-title { font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 700; color: var(--navy); }
+  .risk-body { font-size: 13px; color: var(--slate); margin-bottom: 10px; }
+  .risk-fix { font-size: 12.5px; color: var(--green); background: var(--green-lt); padding: 7px 10px; border-radius: 7px; }
+  .risk-fix strong { font-weight: 700; }
+
+  /* ─── CHECKLIST ──────────────────────────────────────── */
+  .checklist { list-style: none; }
+  .checklist li {
+    display: flex;
+    gap: 12px;
+    padding: 12px 16px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    align-items: flex-start;
+  }
+  .checklist li .icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .checklist li strong { color: var(--navy); font-weight: 600; display: block; margin-bottom: 2px; }
+  .checklist li span { color: var(--slate); font-size: 13px; }
+
+  /* ─── INSIGHT CARDS ─────────────────────────────────── */
+  .insight-card {
+    background: linear-gradient(135deg, var(--navy) 0%, #0D5C63 100%);
+    border-radius: 14px;
+    padding: 20px 22px;
+    color: #fff;
+  }
+  .insight-card .num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 38px;
+    font-weight: 700;
+    color: #5EEEF5;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .insight-card h3 { font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .insight-card p { font-size: 13px; color: rgba(255,255,255,0.72); }
+
+  /* ─── ALERT BOX ─────────────────────────────────────── */
+  .alert {
+    padding: 16px 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    font-size: 14px;
+  }
+  .alert-icon { font-size: 20px; flex-shrink: 0; }
+  .alert-red { background: var(--red-lt); border: 1px solid #F5C0BB; }
+  .alert-amber { background: var(--amber-lt); border: 1px solid #F5D8A0; }
+  .alert-green { background: var(--green-lt); border: 1px solid #A3D9B8; }
+  .alert strong { display: block; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+  .alert span { color: var(--slate); }
+
+  /* ─── COST BAR ───────────────────────────────────────── */
+  .cost-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 13.5px; }
+  .cost-row:last-child { border-bottom: none; }
+  .cost-service { flex: 1; font-weight: 600; color: var(--navy); }
+  .cost-price { font-weight: 700; color: var(--teal); font-family: 'Space Grotesk', sans-serif; font-size: 14px; min-width: 100px; text-align: right; }
+  .cost-note { color: var(--slate); font-size: 12.5px; flex: 2; }
+
+  /* ─── FOOTER ─────────────────────────────────────────── */
+  footer { background: var(--navy); color: rgba(255,255,255,0.5); text-align: center; padding: 28px 20px; font-size: 12px; margin-top: 64px; }
+  footer strong { color: rgba(255,255,255,0.8); }
+
+  /* ─── RESPONSIVE ─────────────────────────────────────── */
+  @media(max-width: 700px) {
+    .hero { padding: 36px 24px 32px; }
+    .page-wrap { padding: 32px 20px; }
+    .top-nav { padding: 0 20px; }
+    .decision-card { grid-template-columns: 1fr; }
+    .dec-num { display: none; }
+    .gw-table { font-size: 12px; }
+    .gw-table th, .gw-table td { padding: 9px 10px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════ HERO ══════════════════════ -->
+<section class="hero">
+  <span class="hero-label">Team Strategy Briefing · June 2026</span>
+  <h1>Water &amp; Sanitation NPO<br><span>Platform Strategy</span></h1>
+  <p class="hero-sub">Everything the team needs to know before building — payment options, best tech stack, risks, and what to decide in Week 1. Written in plain English.</p>
+  <div class="hero-pills">
+    <span class="pill">🇰🇪 Kenya-based NGO</span>
+    <span class="pill">🇺🇸 US Donors (USD)</span>
+    <span class="pill">⏱ 7-Week Build</span>
+    <span class="pill">💰 ~$1,200 Budget</span>
+    <span class="pill">👥 5-Person Team</span>
+    <span class="pill">🖥 6 Public Pages + Admin</span>
+  </div>
+</section>
+
+<!-- ══════════════════════ NAV ══════════════════════ -->
+<nav class="top-nav" aria-label="Page sections">
+  <a href="#decisions">Critical Decisions</a>
+  <a href="#stack">Tech Stack</a>
+  <a href="#payments">Payments</a>
+  <a href="#donations">Donation Page</a>
+  <a href="#email">Email &amp; Chat</a>
+  <a href="#cms">CMS Gap</a>
+  <a href="#security">Security</a>
+  <a href="#seo">SEO &amp; Growth</a>
+  <a href="#risks">Risks</a>
+  <a href="#week1">Week 1 List</a>
+  <a href="#insights">Key Insights</a>
+</nav>
+
+<div class="page-wrap">
+
+  <!-- ══════════════════ CRITICAL DECISIONS ══════════════════ -->
+  <section id="decisions">
+    <div class="section-head">
+      <div class="section-icon" style="background:#EEF2FF">⚡</div>
+      <div>
+        <h2>7 Critical Decisions to Make in Week 1</h2>
+        <p>Get these wrong now and it costs 1–2 weeks of rework later.</p>
+      </div>
+    </div>
+
+    <div class="decision-card">
+      <div class="dec-num">01</div>
+      <div>
+        <div class="dec-title">Use Next.js — not plain React</div>
+        <div class="dec-body">Plain React is a <strong>client-side app</strong> — Google can't easily read it, so your donation page won't show up in search results. Next.js gives you fast pages, great SEO, and built-in image optimisation for the photo-heavy gallery. <strong>This is a must, not optional.</strong></div>
+      </div>
+      <span class="badge badge-red">Decide Now</span>
+    </div>
+
+    <div class="decision-card warn">
+      <div class="dec-num">02</div>
+      <div>
+        <div class="dec-title">Build a "swap-able" payment layer from Day 1</div>
+        <div class="dec-body">You'll start with Pesapal but will likely move to a better solution later. If you wire the payment code directly into every page, migrating means rewriting the whole checkout. <strong>Wrap all payment calls in one file (e.g., payment-service.js)</strong> — then swapping providers takes an hour, not a week.</div>
+      </div>
+      <span class="badge badge-amber">Architecture</span>
+    </div>
+
+    <div class="decision-card danger">
+      <div class="dec-num">03</div>
+      <div>
+        <div class="dec-title">Remove PlanetScale from all plans immediately</div>
+        <div class="dec-body">PlanetScale <strong>killed its free plan in April 2024</strong>. The cheapest plan is now $39/month. It's essentially gone as a budget-friendly option. Anyone on the team who researched databases before mid-2024 has outdated info. Use Supabase instead.</div>
+      </div>
+      <span class="badge badge-red">Outdated Info</span>
+    </div>
+
+    <div class="decision-card warn">
+      <div class="dec-num">04</div>
+      <div>
+        <div class="dec-title">Add a CMS — the brief forgot it</div>
+        <div class="dec-body">There is <strong>no content management system</strong> in the brief. Without one, the client needs a developer to change any text, photo, or project update — forever. Add Sanity.io (free) so the client can edit the site themselves. This must be agreed in Week 1.</div>
+      </div>
+      <span class="badge badge-amber">Gap Alert</span>
+    </div>
+
+    <div class="decision-card danger">
+      <div class="dec-num">05</div>
+      <div>
+        <div class="dec-title">Start the US tax deductibility process now</div>
+        <div class="dec-body">US donors giving $250+ often won't donate if they can't get a tax receipt. Kenya-based NGOs are <strong>not automatically tax-deductible in the US</strong>. The team needs to advise the client to pursue a "fiscal sponsorship" with a US charity. This takes 2–6 months — start now, it runs alongside development.</div>
+      </div>
+      <span class="badge badge-red">Legal Priority</span>
+    </div>
+
+    <div class="decision-card">
+      <div class="dec-num">06</div>
+      <div>
+        <div class="dec-title">Put the admin system inside the main app — not separate</div>
+        <div class="dec-body">Build the admin section at <code style="background:#F1F5FF;padding:2px 6px;border-radius:4px;font-size:12px">/admin</code> in the same Next.js project, protected by login. Don't build a separate admin app. One codebase = half the maintenance, half the security risk.</div>
+      </div>
+      <span class="badge badge-teal">Architecture</span>
+    </div>
+
+    <div class="decision-card warn">
+      <div class="dec-num">07</div>
+      <div>
+        <div class="dec-title">Use Brevo for newsletters — not Resend</div>
+        <div class="dec-body">Resend is great for <strong>automated emails</strong> (receipts, confirmations). But it can't manage a subscriber list, send campaigns, or handle unsubscribes. Use <strong>Brevo (free)</strong> for newsletters and keep Resend for system emails.</div>
+      </div>
+      <span class="badge badge-amber">Tool Mismatch</span>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ══════════════════ TECH STACK ══════════════════ -->
+  <section id="stack">
+    <div class="section-head">
+      <div class="section-icon" style="background:#E0F4F5">🛠</div>
+      <div>
+        <h2>Recommended Tech Stack</h2>
+        <p>Every tool chosen for this specific budget, timeline, and use case.</p>
+      </div>
+    </div>
+
+    <div class="alert alert-amber">
+      <span class="alert-icon">💡</span>
+      <div><strong>Total monthly cost in production: ~$45–90/month</strong><span> — well within any NPO operating budget. Development phase costs nearly nothing.</span></div>
+    </div>
+
+    <table class="stack-table">
+      <thead>
+        <tr>
+          <th>What it does</th>
+          <th>Recommended Tool</th>
+          <th>Why</th>
+          <th>Cost</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="stack-role">Frontend Framework</td>
+          <td class="stack-pick">Next.js 14</td>
+          <td class="stack-why">Fast pages, great SEO, built-in image compression, no extra server needed</td>
+          <td><span class="badge badge-green">Free</span></td>
+        </tr>
+        <tr>
+          <td class="stack-role">UI Styling</td>
+          <td class="stack-pick">Tailwind + Shadcn/ui</td>
+          <td class="stack-why">Build faster, accessible components included, easy to customise</td>
+          <td><span class="badge badge-green">Free</span></td>
+        </tr>
+        <tr>
+          <td class="stack-role">Language</td>
+          <td class="stack-pick">JavaScript (JSDoc)</td>
+          <td class="stack-why">TypeScript adds too much setup time for a 7-week build; add it in Phase 2</td>
+          <td><span class="badge badge-green">Free</span></td>
+        </tr>
+        <tr>
+          <td class="stack-role">Database + Auth</td>
+          <td class="stack-pick">Supabase</td>
+          <td class="stack-why">Gives you database, login system, file storage, and real-time features all in one. Free tier covers development. PlanetScale is dead. Neon is good but lacks built-in auth/storage.</td>
+          <td><span class="badge badge-green">Free → $25/mo</span></td>
+        </tr>
+        <tr>
+          <td class="stack-role">Content Management</td>
+          <td class="stack-pick">Sanity.io</td>
+          <td class="stack-why">Client edits website content without a developer. Free tier is generous enough to never pay.</td>
+          <td><span class="badge badge-green">Free</span></td>
+        </tr>
+        <tr>
+          <td class="stack-role">Photo Gallery CDN</td>
+          <td class="stack-pick">Cloudinary</td>
+          <td class="stack-why">Automatically compresses photos, serves the right size for each device. Field photos load fast on US phones.</td>
+          <td><span class="badge badge-green">Free (25GB)</span></td>
+        </tr>
+        <tr>
+          <td class="stack-role">Hosting</td>
+          <td class="stack-pick">Vercel</td>
+          <td class="stack-why">Zero-config deploy from GitHub, global CDN, automatic HTTPS. Perfect for Next.js.</td>
+          <td><span class="badge badge-green">Free → $20/mo</span></td>
+        </tr>
+        <tr>
+          <td class="stack-role">DDoS + Security CDN</td>
+          <td class="stack-pick">Cloudflare (free)</td>
+          <td class="stack-why">Protects the donation page from attacks. Critical during fundraising campaigns when the site is under load.</td>
+          <td><span class="badge badge-green">Free</span></td>
+        </tr>
+        <tr>
+          <td class="stack-role">Transactional Email</td>
+          <td class="stack-pick">Resend</td>
+          <td class="stack-why">Receipts, confirmations, admin alerts. Stays in the stack but only for automated system emails.</td>
+          <td><span class="badge badge-green">Free → $20/mo</span></td>
+        </tr>
+        <tr>
+          <td class="stack-role">Newsletter Email</td>
+          <td class="stack-pick">Brevo (Sendinblue)</td>
+          <td class="stack-why">Subscriber management, campaigns, unsubscribe handling. Resend cannot do any of this.</td>
+          <td><span class="badge badge-green">Free → $25/mo</span></td>
+        </tr>
+        <tr>
+          <td class="stack-role">Chat / Support Widget</td>
+          <td class="stack-pick">Tawk.to</td>
+          <td class="stack-why">Genuinely free forever. Live chat with email fallback when team is offline. 20-minute install.</td>
+          <td><span class="badge badge-green">Free</span></td>
+        </tr>
+        <tr>
+          <td class="stack-role">Payment (Phase 1)</td>
+          <td class="stack-pick">Pesapal</td>
+          <td class="stack-why">Works in Kenya, accepts USD cards from US donors. Not ideal long-term but gets you launched.</td>
+          <td><span class="badge badge-amber">3.5–5% per txn</span></td>
+        </tr>
+        <tr>
+          <td class="stack-role">Analytics</td>
+          <td class="stack-pick">Google Analytics 4</td>
+          <td class="stack-why">Free, tracks donation funnel, see where donors drop off. Add cookie consent banner (required).</td>
+          <td><span class="badge badge-green">Free</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top:24px;background:var(--white);border:1px solid var(--border);border-radius:14px;padding:24px;">
+      <p style="font-size:13px;color:var(--slate);margin-bottom:16px;font-weight:600;text-transform:uppercase;letter-spacing:1px;">Monthly Production Costs</p>
+      <div class="cost-row"><span class="cost-service">Vercel (Pro)</span><span class="cost-note">Needed once traffic grows past free tier</span><span class="cost-price">$20/mo</span></div>
+      <div class="cost-row"><span class="cost-service">Supabase (Pro)</span><span class="cost-note">Required for production uptime SLA — free tier can pause</span><span class="cost-price">$25/mo</span></div>
+      <div class="cost-row"><span class="cost-service">Brevo Newsletter</span><span class="cost-note">Up to 20,000 email sends</span><span class="cost-price">$25/mo</span></div>
+      <div class="cost-row"><span class="cost-service">Resend Transactional</span><span class="cost-note">Up to 50,000 automated emails</span><span class="cost-price">$20/mo</span></div>
+      <div class="cost-row"><span class="cost-service">Domain (.org)</span><span class="cost-note">Annual</span><span class="cost-price">$1.25/mo</span></div>
+      <div class="cost-row" style="background:#F4F7FC;border-radius:8px;margin-top:4px;"><span class="cost-service" style="font-size:15px;font-weight:700;color:var(--navy);">Total</span><span class="cost-note"></span><span class="cost-price" style="font-size:18px;color:var(--navy);">~$91/mo</span></div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ══════════════════ PAYMENTS ══════════════════ -->
+  <section id="payments">
+    <div class="section-head">
+      <div class="section-icon" style="background:#FFF4E0">💳</div>
+      <div>
+        <h2>Payment Gateway — The Hard Truth</h2>
+        <p>This is the most complicated decision in the whole project. Here's what's actually going on.</p>
+      </div>
+    </div>
+
+    <div class="alert alert-red">
+      <span class="alert-icon">🚨</span>
+      <div><strong>Stripe does NOT work directly in Kenya.</strong><span> Stripe only fully supports 46 countries — Kenya is not one of them. You'd need to set up a US company to use Stripe, which takes months and costs money every year. Don't plan for Stripe unless the NPO already has a US entity.</span></div>
+    </div>
+
+    <div class="alert alert-amber">
+      <span class="alert-icon">⚠️</span>
+      <div><strong>Zeffy's "0% fees" doesn't apply to Kenya-based NGOs.</strong><span> Zeffy is a North America–only platform. Their 0% model also prompts donors for a 15–17% "tip" to Zeffy — which some donors find confusing or off-putting.</span></div>
+    </div>
+
+    <table class="gw-table">
+      <thead>
+        <tr>
+          <th>Platform</th>
+          <th>Works in Kenya?</th>
+          <th>US Donors Know It?</th>
+          <th>Tax Receipts?</th>
+          <th>Recurring Giving?</th>
+          <th>Fee (per $50)</th>
+          <th>Verdict</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="gw-name">Pesapal</td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="cross">✗</span></td>
+          <td><span class="cross">✗</span></td>
+          <td><span class="cross">✗</span></td>
+          <td>~$2.00</td>
+          <td><span class="badge badge-amber">Launch only</span></td>
+        </tr>
+        <tr>
+          <td class="gw-name">Stripe</td>
+          <td><span class="cross">✗</span> Not native</td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="tick">✓</span></td>
+          <td>$1.40</td>
+          <td><span class="badge badge-red">Not available</span></td>
+        </tr>
+        <tr>
+          <td class="gw-name">Donorbox + PayPal</td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="tick">✓</span></td>
+          <td>~$3.21</td>
+          <td><span class="badge badge-green">Phase 2 upgrade</span></td>
+        </tr>
+        <tr>
+          <td class="gw-name">Zeffy</td>
+          <td><span class="cross">✗</span> N. America only</td>
+          <td><span class="warn-icon">▲</span> Growing</td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="tick">✓</span></td>
+          <td>$0 but donor tips</td>
+          <td><span class="badge badge-red">Not eligible</span></td>
+        </tr>
+        <tr>
+          <td class="gw-name">PayPal Giving Fund</td>
+          <td><span class="cross">✗</span></td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="cross">✗</span></td>
+          <td>0%</td>
+          <td><span class="badge badge-red">US 501(c)(3) only</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="card-grid" style="margin-top:20px;">
+      <div class="card" style="border-left:4px solid var(--teal)">
+        <span class="card-label" style="color:var(--teal)">Phase 1 — Launch</span>
+        <h3>Use Pesapal</h3>
+        <p>It works in Kenya, accepts USD from US credit cards, and can settle in USD to a Kenya bank account. Not perfect — but it gets you live on time.</p>
+      </div>
+      <div class="card" style="border-left:4px solid var(--green)">
+        <span class="card-label" style="color:var(--green)">Phase 2 — 3 Months Post-Launch</span>
+        <h3>Switch to Donorbox + PayPal</h3>
+        <p>Donorbox gives you recurring donations, automatic tax receipts, donor portal, and US-familiar checkout. Use PayPal as the processor since Stripe isn't available.</p>
+      </div>
+      <div class="card" style="border-left:4px solid var(--amber)">
+        <span class="card-label" style="color:var(--amber)">The Real Unlock — Start Now</span>
+        <h3>Get a US Fiscal Sponsor</h3>
+        <p>A US charity receives donations on your behalf and passes them to you. Donors get a US tax deduction. Platforms like GlobalGiving offer this. It takes 2–6 months — start the application in Week 1.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ══════════════════ DONATION PAGE ══════════════════ -->
+  <section id="donations">
+    <div class="section-head">
+      <div class="section-icon" style="background:#E5F5EC">💚</div>
+      <div>
+        <h2>Donation Page — What Actually Converts</h2>
+        <p>The average NPO donation page converts 11–12% of visitors. Best-in-class pages hit 28%+. Here's the difference.</p>
+      </div>
+    </div>
+
+    <div class="card-grid card-grid-3">
+      <div class="card">
+        <span class="card-label" style="color:var(--teal)">Conversion Fact</span>
+        <h3>Default to Monthly Giving</h3>
+        <p>Set the donation form default to "Monthly" not "One-time." This one change increases monthly donors by <strong>30–50%</strong> with no other changes. It's backed by hundreds of A/B tests.</p>
+      </div>
+      <div class="card">
+        <span class="card-label" style="color:var(--teal)">Trust Signal</span>
+        <h3>Show Real Photos, Never Stock</h3>
+        <p>US donors giving to African NGOs can't visit in person. Real photos of named beneficiaries with locations are their proof the organisation is real. Stock photos destroy trust.</p>
+      </div>
+      <div class="card">
+        <span class="card-label" style="color:var(--teal)">Impact Framing</span>
+        <h3>Tie Money to Outcomes</h3>
+        <p>Don't just say "donate." Say: "$25 = 3 months clean water for one family." "$100 = safe sanitation for a classroom." Make the impact concrete and specific.</p>
+      </div>
+      <div class="card">
+        <span class="card-label" style="color:var(--teal)">Trust Badge</span>
+        <h3>Add Third-Party Ratings</h3>
+        <p>Charity Navigator, GuideStar, and BBB badges should be visible on the donation page — not buried in the footer. US donors check these before giving.</p>
+      </div>
+      <div class="card">
+        <span class="card-label" style="color:var(--teal)">Project Trust</span>
+        <h3>Show a GPS Project Map</h3>
+        <p>A map with pins showing exactly where projects are located (e.g., "Well #14 — Kajiado County, installed March 2024") is the highest-trust feature for an Africa-based NPO. Charity: water built their reputation on this.</p>
+      </div>
+      <div class="card">
+        <span class="card-label" style="color:var(--red)">Common Mistake</span>
+        <h3>Be Clear About Tax Deductibility</h3>
+        <p>Don't leave this vague. If donations aren't tax-deductible in the US yet, say so honestly: "We are working toward US tax deductibility." Donors respect transparency.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ══════════════════ EMAIL & CHAT ══════════════════ -->
+  <section id="email">
+    <div class="section-head">
+      <div class="section-icon" style="background:#EEF2FF">📬</div>
+      <div>
+        <h2>Email System &amp; Chatbot</h2>
+        <p>Two different jobs — need two different tools. Don't try to use one for both.</p>
+      </div>
+    </div>
+
+    <div class="card-grid">
+      <div class="card" style="border-top:3px solid var(--teal)">
+        <span class="card-label" style="color:var(--teal)">Transactional Email (Resend ✓)</span>
+        <h3>Automated System Emails</h3>
+        <p>Donation receipts, welcome emails, password resets, admin notifications. Resend handles this well. Keep it for these tasks only.</p>
+        <div style="margin-top:12px">
+          <span class="badge badge-green">Keep in stack</span>
+        </div>
+      </div>
+      <div class="card" style="border-top:3px solid var(--amber)">
+        <span class="card-label" style="color:var(--amber)">Newsletter (NOT Resend)</span>
+        <h3>Use Brevo Instead</h3>
+        <p>Resend has no subscriber list, no email templates, no campaign analytics, and no automatic unsubscribe handling. You legally need all of these for a newsletter. Brevo is free for up to 300 emails/day.</p>
+        <div style="margin-top:12px">
+          <span class="badge badge-amber">Switch to Brevo</span>
+        </div>
+      </div>
+      <div class="card" style="border-top:3px solid var(--navy)">
+        <span class="card-label" style="color:var(--navy)">Chatbot (Start Simple)</span>
+        <h3>Tawk.to First, AI Later</h3>
+        <p>The brief says "AI chatbot" but a live chat widget is what actually serves donors best at launch. Tawk.to is free, sends missed messages to email, and takes 20 minutes to install. Add AI in Phase 2 using OpenAI when there's budget.</p>
+        <div style="margin-top:12px">
+          <span class="badge badge-teal">Phase 1: Tawk.to</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:var(--white);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-top:4px;">
+      <p style="font-size:13px;font-weight:600;color:var(--navy);margin-bottom:14px;">📧 Recommended Newsletter Content Formula (Monthly)</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <div style="flex:1;min-width:160px;background:#E0F4F5;border-radius:10px;padding:14px;text-align:center">
+          <div style="font-size:28px;font-weight:700;color:var(--teal);font-family:'Space Grotesk',sans-serif">60%</div>
+          <div style="font-size:12px;color:var(--slate);font-weight:600">Impact Story<br>+ Real Photos</div>
+        </div>
+        <div style="flex:1;min-width:160px;background:#EEF2FF;border-radius:10px;padding:14px;text-align:center">
+          <div style="font-size:28px;font-weight:700;color:#4F6CF2;font-family:'Space Grotesk',sans-serif">20%</div>
+          <div style="font-size:12px;color:var(--slate);font-weight:600">Project Update<br>(new well, stats)</div>
+        </div>
+        <div style="flex:1;min-width:160px;background:var(--amber-lt);border-radius:10px;padding:14px;text-align:center">
+          <div style="font-size:28px;font-weight:700;color:var(--amber);font-family:'Space Grotesk',sans-serif">20%</div>
+          <div style="font-size:12px;color:var(--slate);font-weight:600">Single CTA<br>(Donate or Share)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ══════════════════ CMS ══════════════════ -->
+  <section id="cms">
+    <div class="section-head">
+      <div class="section-icon" style="background:#FFF4E0">📝</div>
+      <div>
+        <h2>Content Management — The Missing Piece</h2>
+        <p>The brief doesn't mention a CMS. This is a critical gap that will cause ongoing problems if ignored.</p>
+      </div>
+    </div>
+
+    <div class="alert alert-red">
+      <span class="alert-icon">🔴</span>
+      <div><strong>Without a CMS, every content change needs a developer.</strong><span> That means: client wants to add a new project photo → files a request → developer makes a pull request → deploys. This creates a bad long-term client relationship and unpaid support work.</span></div>
+    </div>
+
+    <div class="card-grid">
+      <div class="card" style="border:2px solid var(--teal)">
+        <span class="card-label" style="color:var(--teal)">✓ Recommended</span>
+        <h3>Sanity.io</h3>
+        <p>Free for 3 users and 10GB. Integrates cleanly with Next.js. The client gets a clean, simple editing panel at <em>yoursite.sanity.studio</em> to update projects, photos, team bios, and news — no developer needed. Changes go live within 60 seconds.</p>
+        <div style="margin-top:12px"><span class="badge badge-green">Free forever for this scale</span></div>
+      </div>
+      <div class="card">
+        <span class="card-label" style="color:var(--slate)">Alternative</span>
+        <h3>Payload CMS</h3>
+        <p>Runs inside the Next.js app itself — one codebase. Good if the team prefers everything together. More technical to set up, but no separate service to manage.</p>
+        <div style="margin-top:12px"><span class="badge badge-teal">Advanced option</span></div>
+      </div>
+      <div class="card">
+        <span class="card-label" style="color:var(--red)">Avoid</span>
+        <h3>Strapi / Directus</h3>
+        <p>Both are self-hosted, meaning you need a VPS server to run just the CMS. Extra cost, extra DevOps work, extra security to maintain. Not worth it when Sanity is free and hosted.</p>
+        <div style="margin-top:12px"><span class="badge badge-red">Too much overhead</span></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ══════════════════ SECURITY ══════════════════ -->
+  <section id="security">
+    <div class="section-head">
+      <div class="section-icon" style="background:#FEF0EE">🔒</div>
+      <div>
+        <h2>Security — Vincent's Priority List</h2>
+        <p>What the security specialist needs to address, in order of importance.</p>
+      </div>
+    </div>
+
+    <ul class="checklist">
+      <li>
+        <span class="icon">🛡</span>
+        <div><strong>Use Pesapal's hosted checkout page — never touch card data</strong><span>If Pesapal's checkout page handles the payment (user goes to Pesapal's page to type their card), your server never sees card numbers. This means you only need basic PCI compliance (SAQ-A). If you build a custom card form, you'd need expensive quarterly security audits. Don't build custom card forms.</span></div>
+      </li>
+      <li>
+        <span class="icon">🔑</span>
+        <div><strong>Use Supabase Auth — don't build your own login system</strong><span>Custom login systems are the #1 source of security vulnerabilities in small projects. Supabase Auth is enterprise-grade, free, and handles tokens, sessions, and OAuth (Google login) securely.</span></div>
+      </li>
+      <li>
+        <span class="icon">👥</span>
+        <div><strong>Set up 4 admin roles in Supabase</strong><span>Super Admin (everything), Finance Manager (view transactions only), Content Manager (edit website content), Inventory Manager (track assets). Each role only sees what they need — enforced at the database level, not just the app.</span></div>
+      </li>
+      <li>
+        <span class="icon">🌐</span>
+        <div><strong>Put Cloudflare in front of the site — free tier</strong><span>Cloudflare's free plan gives you DDoS protection, a Web Application Firewall, and rate limiting. Critical for a donation page: if the site goes down during a campaign, you lose real donations. Takes 30 minutes to set up.</span></div>
+      </li>
+      <li>
+        <span class="icon">🇰🇪</span>
+        <div><strong>Register with Kenya's data protection office</strong><span>Kenya's Data Protection Act (2019) requires any organisation handling personal data to register with the Office of the Data Protection Commissioner (ODPC). The site collects donor names, emails, and payment info — registration is legally required.</span></div>
+      </li>
+      <li>
+        <span class="icon">🍪</span>
+        <div><strong>Add a cookie consent banner</strong><span>GA4 (Google Analytics) uses cookies. Kenya's Data Protection Act and international best practice require asking users for consent before tracking them. Add a simple cookie banner on first visit.</span></div>
+      </li>
+      <li>
+        <span class="icon">🔐</span>
+        <div><strong>Enable 2FA on all admin accounts at launch</strong><span>Especially the payment admin and finance accounts. A compromised admin account could expose donor data or redirect payment notifications.</span></div>
+      </li>
+    </ul>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ══════════════════ SEO ══════════════════ -->
+  <section id="seo">
+    <div class="section-head">
+      <div class="section-icon" style="background:#E0F4F5">🔍</div>
+      <div>
+        <h2>SEO &amp; US Donor Growth</h2>
+        <p>How to get US donors to find this site through Google — including a $10,000/month free advertising programme.</p>
+      </div>
+    </div>
+
+    <div class="alert alert-green">
+      <span class="alert-icon">🎯</span>
+      <div><strong>The NPO can qualify for Google Ad Grants — $10,000/month in FREE Google Ads.</strong><span> Kenya-based NGOs (registered with the NGO Coordination Board, Registrar of Societies, or as a company limited by guarantee) are eligible. Apply during development — approval takes 2–4 weeks.</span></div>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-label" style="color:var(--navy)">SEO Requirement</span>
+        <h3>Why Next.js is Non-Negotiable</h3>
+        <p>Plain React renders pages in the browser — Google sees a blank page until JavaScript loads. Next.js sends complete HTML to Google, so every project page, gallery caption, and impact story gets indexed. For an NPO trying to rank for "clean water charity Kenya," this is the baseline.</p>
+      </div>
+      <div class="card">
+        <span class="card-label" style="color:var(--navy)">Best Keywords (US Donors)</span>
+        <h3>What US Donors Search For</h3>
+        <p>
+          <strong>High-intent:</strong> "clean water charity Africa," "donate clean water Kenya," "water sanitation nonprofit"<br><br>
+          <strong>Trust-seeking:</strong> "transparent water nonprofit," "water charity low overhead"<br><br>
+          <strong>These are achievable</strong> with content — not paid ads.
+        </p>
+      </div>
+      <div class="card">
+        <span class="card-label" style="color:var(--navy)">Social Strategy (US Donors)</span>
+        <h3>Where to Focus</h3>
+        <p>
+          <strong>Facebook &amp; Instagram</strong> — primary for 35+ donors (highest-value segment). Use real field photos, short impact stories.<br><br>
+          <strong>YouTube</strong> — a 90-second field video ranks in Google Search. Free SEO.<br><br>
+          <strong>Twitter/X</strong> — low priority. Declining effectiveness for NPOs.
+        </p>
+      </div>
+    </div>
+
+    <div style="background:var(--white);border:1px solid var(--border);border-radius:14px;padding:22px 24px;margin-top:4px">
+      <p style="font-weight:700;color:var(--navy);margin-bottom:16px;font-family:'Space Grotesk',sans-serif;">Google Ad Grants — How to Get It</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">
+        <div style="background:var(--bg);border-radius:10px;padding:14px;font-size:13px">
+          <div style="font-weight:700;color:var(--navy);margin-bottom:5px">Step 1 — Week 1</div>
+          <div style="color:var(--slate)">Register with Goodstack (Google's Kenya validation partner). Verify NGO status.</div>
+        </div>
+        <div style="background:var(--bg);border-radius:10px;padding:14px;font-size:13px">
+          <div style="font-weight:700;color:var(--navy);margin-bottom:5px">Step 2 — Week 3</div>
+          <div style="color:var(--slate)">Apply for Google for Nonprofits account. Also activates free Google Workspace.</div>
+        </div>
+        <div style="background:var(--bg);border-radius:10px;padding:14px;font-size:13px">
+          <div style="font-weight:700;color:var(--navy);margin-bottom:5px">Step 3 — Week 6</div>
+          <div style="color:var(--slate)">Submit site for Ad Grants review once it's content-rich and live.</div>
+        </div>
+        <div style="background:var(--teal-lt);border-radius:10px;padding:14px;font-size:13px">
+          <div style="font-weight:700;color:var(--teal);margin-bottom:5px">Result — ~Week 9</div>
+          <div style="color:var(--slate)">$10,000/month in free Google Search ads. 5,000–20,000 targeted visitor clicks per month at $0 cost.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ══════════════════ RISKS ══════════════════ -->
+  <section id="risks">
+    <div class="section-head">
+      <div class="section-icon" style="background:#FEF0EE">⚠️</div>
+      <div>
+        <h2>Top 10 Project Risks</h2>
+        <p>Know what could go wrong and how to stop it.</p>
+      </div>
+    </div>
+
+    <div class="card-grid" style="grid-template-columns:repeat(auto-fill,minmax(320px,1fr))">
+
+      <div class="risk-card high">
+        <div class="risk-head">
+          <div class="risk-title">No US tax deductibility at launch</div>
+          <span class="badge badge-red">High</span>
+        </div>
+        <p class="risk-body">Experienced US donors giving $250+ often won't donate without a tax receipt. This suppresses conversion.</p>
+        <p class="risk-fix"><strong>Fix:</strong> Start fiscal sponsorship application in Week 1. Add honest disclosure on donation page.</p>
+      </div>
+
+      <div class="risk-card high">
+        <div class="risk-head">
+          <div class="risk-title">Pesapal checkout unfamiliar to US donors</div>
+          <span class="badge badge-red">High</span>
+        </div>
+        <p class="risk-body">US donors don't recognise Pesapal. Some will abandon checkout when redirected to an unknown payment brand.</p>
+        <p class="risk-fix"><strong>Fix:</strong> Add trust copy near the donate button: "Secure payment via Pesapal, licensed East Africa payment processor." Track abandonment rates from Day 1.</p>
+      </div>
+
+      <div class="risk-card high">
+        <div class="risk-head">
+          <div class="risk-title">No CMS = permanent developer dependency</div>
+          <span class="badge badge-red">High</span>
+        </div>
+        <p class="risk-body">Every text change, new project photo, or team update requires a developer's time post-launch.</p>
+        <p class="risk-fix"><strong>Fix:</strong> Integrate Sanity.io in Week 1. Non-negotiable.</p>
+      </div>
+
+      <div class="risk-card high">
+        <div class="risk-head">
+          <div class="risk-title">7-week timeline with no buffer</div>
+          <span class="badge badge-red">High</span>
+        </div>
+        <p class="risk-body">Any integration problem (Pesapal API, Supabase setup, client photo delays) could push the launch date.</p>
+        <p class="risk-fix"><strong>Fix:</strong> Define a strict MVP. Launch the 6 pages + payments + newsletter signup + basic admin. AI chatbot, advanced analytics, and full inventory UX are Phase 2.</p>
+      </div>
+
+      <div class="risk-card med">
+        <div class="risk-head">
+          <div class="risk-title">Gallery kills page speed for US visitors</div>
+          <span class="badge badge-amber">Medium</span>
+        </div>
+        <p class="risk-body">Large uncompressed field photos from Kenya will load slowly for US visitors. Slow pages = higher bounce rate on the donation page.</p>
+        <p class="risk-fix"><strong>Fix:</strong> Cloudinary with <code style="font-size:11px">f_auto,q_auto</code> parameters. Test loading speed from a US network using Chrome DevTools throttling.</p>
+      </div>
+
+      <div class="risk-card med">
+        <div class="risk-head">
+          <div class="risk-title">Supabase free tier pauses unexpectedly</div>
+          <span class="badge badge-amber">Medium</span>
+        </div>
+        <p class="risk-body">Supabase's free projects pause after 7 days of inactivity. If the site goes live on a free project, a quiet week could take the database (and entire site) offline.</p>
+        <p class="risk-fix"><strong>Fix:</strong> Upgrade to Supabase Pro ($25/mo) before launch. Or set a cron job to ping the database daily.</p>
+      </div>
+
+      <div class="risk-card med">
+        <div class="risk-head">
+          <div class="risk-title">Client scope creep on admin system</div>
+          <span class="badge badge-amber">Medium</span>
+        </div>
+        <p class="risk-body">"100K component" suggests a fixed-price admin build. Without a locked spec, the client may add features mid-build.</p>
+        <p class="risk-fix"><strong>Fix:</strong> Define exactly 6 admin modules in a signed spec document before any code is written. All additions require a formal change request.</p>
+      </div>
+
+      <div class="risk-card med">
+        <div class="risk-head">
+          <div class="risk-title">Google Ad Grants rejected for site quality</div>
+          <span class="badge badge-amber">Medium</span>
+        </div>
+        <p class="risk-body">Google rejects grant applications if the website has thin content, broken pages, or unclear mission pages.</p>
+        <p class="risk-fix"><strong>Fix:</strong> Apply only once the site is fully content-populated. Every page needs real content — not placeholders.</p>
+      </div>
+
+      <div class="risk-card low">
+        <div class="risk-head">
+          <div class="risk-title">Security breach exposing donor data</div>
+          <span class="badge badge-teal">Low Probability</span>
+        </div>
+        <p class="risk-body">Low probability but catastrophic impact. A breach of US donor PII could end the organisation's US fundraising permanently.</p>
+        <p class="risk-fix"><strong>Fix:</strong> Supabase RLS on all tables. Cloudflare WAF. Never store card data. 2FA on admin accounts. Rotate API keys post-launch.</p>
+      </div>
+
+      <div class="risk-card low">
+        <div class="risk-head">
+          <div class="risk-title">US banks flagging Kenya transfers</div>
+          <span class="badge badge-teal">Lower Now</span>
+        </div>
+        <p class="risk-body">Previously, Kenya's FATF grey list status caused some US banks to slow or block Kenya-bound transfers. Kenya was removed from the grey list in June 2024.</p>
+        <p class="risk-fix"><strong>Fix:</strong> Kenya is off the grey list — reduced risk. Fiscal sponsorship eliminates this entirely by routing funds through a US entity.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ══════════════════ WEEK 1 ══════════════════ -->
+  <section id="week1">
+    <div class="section-head">
+      <div class="section-icon" style="background:#E5F5EC">✅</div>
+      <div>
+        <h2>Week 1 Checklist</h2>
+        <p>Before writing any production code, validate these first.</p>
+      </div>
+    </div>
+
+    <ul class="checklist">
+      <li>
+        <span class="icon">💳</span>
+        <div><strong>Test Pesapal with a real international Visa card</strong><span>Many Pesapal integration issues only appear with non-Kenyan cards. Borrow a US-issued card and run a test transaction. Confirm USD collection and settlement flow works end-to-end before building the donation page.</span></div>
+      </li>
+      <li>
+        <span class="icon">🏦</span>
+        <div><strong>Confirm the NPO has a USD forex bank account</strong><span>Pesapal settles USD to a USD-designated bank account in Kenya. Most major Kenyan banks (Equity, KCB, Co-op) offer these. If the NPO doesn't have one, opening it takes 5–10 business days.</span></div>
+      </li>
+      <li>
+        <span class="icon">📋</span>
+        <div><strong>Confirm the NPO's registration type</strong><span>Is it registered with the NGO Coordination Board? Registrar of Societies? Company limited by guarantee? This determines Google for Nonprofits eligibility and which fiscal sponsorship routes are available.</span></div>
+      </li>
+      <li>
+        <span class="icon">🌐</span>
+        <div><strong>Begin Google for Nonprofits application</strong><span>Register with Goodstack (Google's Kenya validation partner). This runs alongside development and takes 2–4 weeks — start now to get Ad Grants approved close to launch.</span></div>
+      </li>
+      <li>
+        <span class="icon">🏛</span>
+        <div><strong>Research one US fiscal sponsorship option</strong><span>Contact GlobalGiving or Africa Foundation USA to understand the application process and timeline. This unlocks US tax deductibility for donors — the biggest conversion improvement possible.</span></div>
+      </li>
+      <li>
+        <span class="icon">🗄</span>
+        <div><strong>Set up Supabase — test auth, storage, and one RLS policy</strong><span>Stand up a Supabase project. Verify: a user can log in, a file can be uploaded to Storage, and one database table has a working Row Level Security policy. This takes 2 hours and confirms the core architecture before you depend on it.</span></div>
+      </li>
+      <li>
+        <span class="icon">📷</span>
+        <div><strong>Get 20–30 real field photos from the client NOW</strong><span>The gallery and donation page need real photos of named beneficiaries with locations. "We'll use placeholders for now" is not acceptable — it delays the most trust-critical part of the site. Get them in Week 1.</span></div>
+      </li>
+      <li>
+        <span class="icon">🗺</span>
+        <div><strong>Build the payment abstraction layer first</strong><span>Before any Pesapal integration, create a payment-service.js file that all payment calls route through. This single architectural decision makes migrating to Donorbox/Stripe later a 1-hour job instead of a 1-week refactor.</span></div>
+      </li>
+      <li>
+        <span class="icon">📝</span>
+        <div><strong>Define Sanity CMS schemas alongside the React components</strong><span>Every CMS-managed content area (projects, team, gallery, news) needs a Sanity schema defined in Week 1. This forces agreement on what the client can edit independently and prevents scope creep later.</span></div>
+      </li>
+      <li>
+        <span class="icon">🔒</span>
+        <div><strong>Register with Kenya's Data Protection Commissioner</strong><span>The Kenya Data Protection Act 2019 requires registration as a data controller before collecting personal data. The site collects donor names, emails, and financial information. This is a legal requirement, not a suggestion.</span></div>
+      </li>
+    </ul>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ══════════════════ INSIGHTS ══════════════════ -->
+  <section id="insights">
+    <div class="section-head">
+      <div class="section-icon" style="background:#1B2B4B">💡</div>
+      <div>
+        <h2>10 Things the Team Probably Hasn't Discussed Yet</h2>
+        <p>Expert-level insights to bring to the meeting. Each one has a real impact on the project.</p>
+      </div>
+    </div>
+
+    <div class="card-grid" style="grid-template-columns:repeat(auto-fill,minmax(280px,1fr))">
+
+      <div class="insight-card">
+        <div class="num">01</div>
+        <h3>Kenya left the FATF grey list in June 2024</h3>
+        <p>Previously, Kenya's grey list status made US institutional donors nervous about sending money. That barrier is now removed. Time the fundraising launch to take advantage of this improved trust posture.</p>
+      </div>
+
+      <div class="insight-card">
+        <div class="num">02</div>
+        <h3>PlanetScale removed its free plan in April 2024</h3>
+        <p>Anyone on the team who researched the database stack before mid-2024 has outdated information. PlanetScale now starts at $39/month. Remove it from all consideration. Supabase is the replacement.</p>
+      </div>
+
+      <div class="insight-card">
+        <div class="num">03</div>
+        <h3>The chatbot should be human-staffed at launch, not AI</h3>
+        <p>Donors who chat are close to converting. A human response (even delayed via email) builds relationship. AI feels cold for emotional causes like water access. Add AI in Phase 2 when there's budget.</p>
+      </div>
+
+      <div class="insight-card">
+        <div class="num">04</div>
+        <h3>Zeffy's "0% fees" doesn't apply to Kenya NGOs</h3>
+        <p>Zeffy is North America–only and prompts donors for a 15–17% tip to Zeffy by default. It's not the free solution it seems for this project's geography.</p>
+      </div>
+
+      <div class="insight-card">
+        <div class="num">05</div>
+        <h3>Stripe cannot be opened in Kenya</h3>
+        <p>Stripe isn't natively supported in Kenya. Getting a Stripe account requires incorporating a US company, opening a US bank account, and getting a US tax ID. That's a 2–6 month process — not a Week 1 option.</p>
+      </div>
+
+      <div class="insight-card">
+        <div class="num">06</div>
+        <h3>Set the donation form default to "Monthly" — 30–50% more recurring donors</h3>
+        <p>This one UX change, backed by hundreds of A/B tests across US NPOs, increases monthly donor acquisition dramatically with no other changes to the page.</p>
+      </div>
+
+      <div class="insight-card">
+        <div class="num">07</div>
+        <h3>The gallery is a trust mechanism, not just a visual feature</h3>
+        <p>US donors who can't visit Kenya use real photos as their proof of legitimacy. Named beneficiaries with geo-tagged locations (like charity: water pioneered) are the highest-trust feature an Africa-based NPO can offer.</p>
+      </div>
+
+      <div class="insight-card">
+        <div class="num">08</div>
+        <h3>Supabase's free tier pauses after 7 days of inactivity</h3>
+        <p>If the site goes live on a free Supabase project, any quiet week will take the database offline. Upgrade to Pro ($25/month) before launch or set a daily automated ping to prevent inactivity.</p>
+      </div>
+
+      <div class="insight-card">
+        <div class="num">09</div>
+        <h3>Google Ad Grants gives $10,000/month in free ads — start the application in Week 1</h3>
+        <p>Kenya-based NPOs are eligible. The application takes 2–4 weeks to approve. If you apply during development, it can be active by the time real users arrive. Missing the window means months of missed free advertising.</p>
+      </div>
+
+      <div class="insight-card">
+        <div class="num">10</div>
+        <h3>The biggest conversion problem isn't the design — it's missing US tax deductibility</h3>
+        <p>A beautiful site with perfect UX still loses high-value US donors ($250+) who require a tax receipt. The technical team should build the donation page to support two paths from Day 1: direct (Pesapal, no deduction) and via a future US fiscal sponsor (tax-deductible). Even if the second path isn't live at launch, the UX hook should be in the wireframes now.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ══════════════════ BENCHMARK SUMMARY ══════════════════ -->
+  <section>
+    <div class="section-head">
+      <div class="section-icon" style="background:#EEF2FF">🏆</div>
+      <div>
+        <h2>What the Best NPO Sites Do</h2>
+        <p>Five benchmark sites — what they get right and what to steal.</p>
+      </div>
+    </div>
+    <div class="card-grid" style="grid-template-columns:repeat(auto-fill,minmax(300px,1fr))">
+      <div class="card">
+        <span class="card-label" style="color:var(--teal)">charity: water</span>
+        <h3>GPS Maps for Every Project</h3>
+        <p>Every completed well has GPS coordinates on a public map. Donors can literally see their impact location on Google Maps. This is the single highest-trust feature for an international water NPO. The team should build this.</p>
+      </div>
+      <div class="card">
+        <span class="card-label" style="color:var(--teal)">Lifewater</span>
+        <h3>Named Beneficiary Profiles</h3>
+        <p>Each project page features named individuals with multi-paragraph stories and "6 months later" follow-up updates. Donors fund people, not projects.</p>
+      </div>
+      <div class="card">
+        <span class="card-label" style="color:var(--teal)">Blood:Water</span>
+        <h3>Monthly Donors = "Community Members"</h3>
+        <p>Recurring donors are called "community members," not "monthly donors." Framing giving as joining a community dramatically improves monthly donor retention.</p>
+      </div>
+      <div class="card">
+        <span class="card-label" style="color:var(--teal)">World Vision Water</span>
+        <h3>Trust Badges Above the Fold</h3>
+        <p>Charity Navigator, BBB Accredited, and GuideStar Gold badges appear in the header — not the footer. US donors look for these before giving. They should be on the donation page, not hidden away.</p>
+      </div>
+      <div class="card">
+        <span class="card-label" style="color:var(--teal)">Water.org</span>
+        <h3>The Founder Story Converts</h3>
+        <p>Matt Damon is an extreme example, but a credible founder story — real name, real photo, real reason they started the NPO — dramatically increases trust for US donors who are evaluating whether the organisation is legitimate.</p>
+      </div>
+    </div>
+  </section>
+
+</div><!-- end page-wrap -->
+
+<footer>
+  <strong>NPO Platform Strategy — Team Briefing</strong><br/>
+  Synthesised from 13 research domains · June 2026 · Internal use only · Update quarterly
+</footer>
+
+</body>
+</html>

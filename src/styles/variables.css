@@ -1,0 +1,88 @@
+/* ============================================
+   AquaHope Foundation — Design Tokens
+   ============================================ */
+
+:root {
+  /* ---- Color Palette ---- */
+  --color-primary: #0E6BA8;
+  --color-primary-light: #36A2EB;
+  --color-primary-dark: #083D61;
+
+  --color-secondary: #2ECC71;
+  --color-secondary-dark: #1A8A4E;
+
+  --color-accent: #F39C12;
+  --color-accent-bright: #F1C40F;
+
+  --color-dark-bg: #0A1628;
+  --color-dark-surface: #111D2E;
+
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #A0AEC0;
+  --color-text-on-light: #1A202C;
+
+  --color-success: #2ECC71;
+  --color-warning: #F39C12;
+  --color-danger: #E74C3C;
+
+  /* ---- Glassmorphism ---- */
+  --glass-bg: rgba(255, 255, 255, 0.06);
+  --glass-bg-strong: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-blur: blur(16px);
+
+  /* ---- Gradients ---- */
+  --gradient-hero: linear-gradient(135deg, #0A1628 0%, #0E6BA8 50%, #2ECC71 100%);
+  --gradient-accent: linear-gradient(135deg, #0E6BA8, #2ECC71);
+  --gradient-warm: linear-gradient(135deg, #F39C12, #E74C3C);
+  --gradient-text: linear-gradient(135deg, #36A2EB, #2ECC71);
+
+  /* ---- Typography ---- */
+  --font-heading: 'Outfit', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  --fs-hero: clamp(2.5rem, 5vw, 4.5rem);
+  --fs-section: clamp(1.8rem, 3vw, 3rem);
+  --fs-body: clamp(0.95rem, 1.2vw, 1.1rem);
+  --fs-caption: 0.85rem;
+  --fs-small: 0.75rem;
+
+  --fw-light: 300;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --fw-extrabold: 800;
+
+  /* ---- Spacing ---- */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 2rem;
+  --space-lg: 3rem;
+  --space-xl: 5rem;
+  --space-2xl: 8rem;
+
+  /* ---- Shadows ---- */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.3);
+  --shadow-glow-primary: 0 0 30px rgba(14, 107, 168, 0.4);
+  --shadow-glow-accent: 0 0 30px rgba(243, 156, 18, 0.4);
+  --shadow-glow-secondary: 0 0 30px rgba(46, 204, 113, 0.4);
+
+  /* ---- Border Radius ---- */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 32px;
+  --radius-full: 9999px;
+
+  /* ---- Transitions ---- */
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ---- Layout ---- */
+  --max-width: 1280px;
+  --nav-height: 72px;
+}
