@@ -7,7 +7,7 @@ class ResizeObserverMock {
   unobserve() {}
   disconnect() {}
 }
-global.ResizeObserver = ResizeObserverMock
+globalThis.ResizeObserver = ResizeObserverMock as any
 
 // Mock IntersectionObserver
 class IntersectionObserverMock {
@@ -22,7 +22,7 @@ class IntersectionObserverMock {
   unobserve() {}
   disconnect() {}
 }
-global.IntersectionObserver = IntersectionObserverMock as any
+globalThis.IntersectionObserver = IntersectionObserverMock as any
 
 // Mock window.matchMedia
 Object.defineProperty(window, 'matchMedia', {
