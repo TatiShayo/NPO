@@ -1,34 +1,21 @@
 {
-  "status": "passed",
-  "totalTests": 14,
-  "passed": 14,
-  "failed": 0,
-  "durationSeconds": 25.57,
-  "testFiles": [
+  "schema": "hermes.tests.v6",
+  "run_id": "hermes-2026-07-27-v6-NPO",
+  "project": "NPO",
+  "produced_at": "2026-07-27T22:12:54.505503",
+  "summary": {
+    "status": "RUNNABLE",
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "unrunnable": 0
+  },
+  "suites": [
     {
-      "path": "src/pages/Dashboard.test.tsx",
-      "status": "passed",
-      "tests": [
-        "initializes with default donor feed if localStorage is empty",
-        "calculates summary stats correctly based on seeded localStorage data",
-        "pauses, cancels, and resumes/reactivates monthly subscriptions and updates localStorage"
-      ]
-    },
-    {
-      "path": "src/pages/Donate.test.tsx",
-      "status": "passed",
-      "tests": [
-        "toggles payment methods (Credit Card vs M-Pesa) inside the checkout modal",
-        "shows error if credit card details are empty",
-        "shows error if card number is not between 13 and 19 digits",
-        "shows error if CVV is invalid",
-        "shows error if M-Pesa phone number is empty",
-        "shows error if M-Pesa phone number is invalid format",
-        "runs successful credit card payment flow and stores donation in localStorage",
-        "simulates credit card payment failure when card number ends in 4000",
-        "simulates credit card payment failure when amount is 999",
-        "simulates M-Pesa payment failure when phone number ends in 000"
-      ]
+      "suite": "TypeScript Compilation",
+      "tool": "npx tsc --noEmit",
+      "status": "PASS",
+      "exit_code": 0
     }
   ]
 }

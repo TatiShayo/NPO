@@ -1,7 +1,10 @@
 {
-  "schema": "hermes.findings.v4",
-  "run_id": "hermes-2026-07-25-NPO",
+  "schema": "hermes.findings.v6",
+  "run_id": "hermes-2026-07-27-v6-NPO",
   "project": "NPO",
-  "phase": "8.0",
+  "phase": "4.0",
+  "produced_at": "2026-07-27T22:12:54.505503",
+  "runner_tier": "T1",
+  "mode": "static-only",
   "findings": []
 }
