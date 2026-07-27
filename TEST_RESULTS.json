@@ -2,7 +2,7 @@
   "schema": "hermes.tests.v6",
   "run_id": "hermes-2026-07-27-v6-NPO",
   "project": "NPO",
-  "produced_at": "2026-07-27T22:12:54.505503",
+  "produced_at": "2026-07-27T22:38:54.237991",
   "summary": {
     "status": "RUNNABLE",
     "passed": 1,
