@@ -2,7 +2,7 @@
 // Hero Section — Full-viewport animated hero
 // ============================================
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import Button from '../ui/Button'
 
 export default function Hero() {
@@ -18,15 +18,15 @@ export default function Hero() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Generate floating particles
-  const particles = Array.from({ length: 12 }, (_, i) => ({
+  // Generate floating particles once
+  const particles = useMemo(() => Array.from({ length: 12 }, (_, i) => ({
     id: i,
     size: Math.random() * 8 + 4,
     left: Math.random() * 100,
     top: Math.random() * 100,
     duration: Math.random() * 4 + 4,
     delay: Math.random() * 3,
-  }))
+  })), [])
 
   return (
     <section className="hero" id="hero" aria-label="Hero section">

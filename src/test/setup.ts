@@ -24,6 +24,13 @@ class IntersectionObserverMock {
 }
 globalThis.IntersectionObserver = IntersectionObserverMock as any
 
+// Mock window.scrollTo and Element.prototype.scrollIntoView
+Object.defineProperty(window, 'scrollTo', {
+  writable: true,
+  value: vi.fn(),
+})
+Element.prototype.scrollIntoView = vi.fn()
+
 // Mock window.matchMedia
 Object.defineProperty(window, 'matchMedia', {
   writable: true,

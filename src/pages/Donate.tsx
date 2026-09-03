@@ -1,8 +1,9 @@
 // ============================================
 // Donate Page — High-conversion donation form
+// With Gift Aid calculation, Fee Coverage, Receipts & Privacy Options
 // ============================================
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import {
   FaChevronRight,
@@ -19,11 +20,17 @@ import {
   FaCreditCard,
   FaMobileAlt,
   FaCheckCircle,
-  FaTimesCircle
+  FaTimesCircle,
+  FaFileInvoiceDollar,
+  FaPrint,
+  FaUserSecret,
 } from 'react-icons/fa'
 import { donationAmounts, donorFeed, otherWays } from '../data/donors'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
 import Modal from '../components/ui/Modal'
+import { calculateGiftAid, calculateProcessingFee, calculateRecurringSchedule } from '../utils/donationMath'
+import { sanitizeText, anonymizeDonor, PrivacyPreference } from '../utils/sanitization'
+import { generateDonationReceipt, formatReceiptAsText, ReceiptDocument } from '../utils/receiptGenerator'
 
 const otherWayIcons: Record<string, React.ReactNode> = {
   building: <FaBuilding />,
@@ -32,31 +39,39 @@ const otherWayIcons: Record<string, React.ReactNode> = {
   bank: <FaUniversity />,
 }
 
+interface StoredDonation {
+  id: number
+  name: string
+  location: string
+  amount: string
+  amountNum: number
+  type: string
+  time: string
+  initials: string
+  gradient: string
+  date: string
+  message?: string
+  status?: string
+  receiptNumber?: string
+  coveredFees?: boolean
+  giftAidClaimed?: boolean
+  privacy?: PrivacyPreference
+}
+
 export default function Donate() {
   useScrollAnimation()
 
-  const [donationType, setDonationType] = useState('monthly')
-  const [selectedAmount, setSelectedAmount] = useState(50)
-  const [customAmount, setCustomAmount] = useState('')
-  const [donorName, setDonorName] = useState('')
-  const [donorEmail, setDonorEmail] = useState('')
-  const [donorMessage, setDonorMessage] = useState('')
-
-  // Local storage state for live donor feed
-  interface StoredDonation {
-    id: number
-    name: string
-    location: string
-    amount: string
-    amountNum: number
-    type: string
-    time: string
-    initials: string
-    gradient: string
-    date: string
-    message?: string
-    status?: string
-  }
+  const [donationType, setDonationType] = useState<'monthly' | 'one-time'>('monthly')
+  const [selectedAmount, setSelectedAmount] = useState<number>(50)
+  const [customAmount, setCustomAmount] = useState<string>('')
+  const [donorName, setDonorName] = useState<string>('')
+  const [donorEmail, setDonorEmail] = useState<string>('')
+  const [donorMessage, setDonorMessage] = useState<string>('')
+  const [coverFees, setCoverFees] = useState<boolean>(false)
+  const [claimGiftAid, setClaimGiftAid] = useState<boolean>(false)
+  const [privacyPreference, setPrivacyPreference] = useState<PrivacyPreference>('public')
+  const [createdReceipt, setCreatedReceipt] = useState<ReceiptDocument | null>(null)
+  const [showReceiptModal, setShowReceiptModal] = useState<boolean>(false)
 
   const [feedItems, setFeedItems] = useState<StoredDonation[]>([])
 
@@ -64,7 +79,10 @@ export default function Donate() {
     document.title = 'Donate — AquaHope Foundation'
     const metaDesc = document.querySelector('meta[name="description"]')
     if (metaDesc) {
-      metaDesc.setAttribute('content', 'Donate to AquaHope Foundation. 100% of your donation goes directly to communities. Clean water, sanitation, agriculture, education, and health across East Africa.')
+      metaDesc.setAttribute(
+        'content',
+        'Donate to AquaHope Foundation. 100% of your donation goes directly to communities. Clean water, sanitation, agriculture, education, and health across East Africa.'
+      )
     }
 
     const stored = localStorage.getItem('npo_donations')
@@ -83,7 +101,9 @@ export default function Donate() {
   // Checkout modal states
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false)
   const [checkoutMethod, setCheckoutMethod] = useState<'card' | 'mpesa'>('card')
-  const [checkoutState, setCheckoutState] = useState<'idle' | 'connecting' | 'verifying' | 'authenticating' | 'success' | 'failed'>('idle')
+  const [checkoutState, setCheckoutState] = useState<
+    'idle' | 'connecting' | 'verifying' | 'authenticating' | 'success' | 'failed'
+  >('idle')
   const [checkoutError, setCheckoutError] = useState('')
 
   // Sandbox inputs
@@ -101,29 +121,42 @@ export default function Donate() {
     setMpesaPhone('')
   }
 
-  // Helper to sanitize inputs to prevent stored XSS
-  const sanitizeInput = (text: string): string => {
-    return text
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#x27;')
-      .replace(/\//g, '&#x2F;')
-  }
-
   const handleCloseCheckout = () => {
     setIsCheckoutOpen(false)
     clearSensitiveData()
   }
 
-  const finalAmount = customAmount ? parseInt(customAmount) : selectedAmount
+  // Base amount calculation
+  const baseAmount = useMemo(() => {
+    if (customAmount) {
+      const parsed = parseFloat(customAmount.replace(/[^0-9.]/g, ''))
+      return isNaN(parsed) || parsed <= 0 ? 1 : Math.round(parsed)
+    }
+    return selectedAmount
+  }, [customAmount, selectedAmount])
+
+  // Fee calculation
+  const feeCalc = useMemo(() => {
+    return calculateProcessingFee(baseAmount)
+  }, [baseAmount])
+
+  // Gift Aid calculation
+  const giftAidCalc = useMemo(() => {
+    return calculateGiftAid(baseAmount, claimGiftAid)
+  }, [baseAmount, claimGiftAid])
+
+  // Recurring impact projection
+  const recurringImpact = useMemo(() => {
+    return calculateRecurringSchedule(baseAmount, donationType)
+  }, [baseAmount, donationType])
+
+  // Final amount to charge
+  const finalAmount = coverFees ? feeCalc.coveredTotalAmount : baseAmount
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setCheckoutState('idle')
     setCheckoutError('')
-    // Pre-fill card name if available
     setCardName(donorName)
     setIsCheckoutOpen(true)
   }
@@ -189,7 +222,7 @@ export default function Donate() {
           // Trigger failure conditions
           const formattedCardNumber = cardNumber.replace(/\s+/g, '')
           const isFailedCard = formattedCardNumber.endsWith('4000')
-          const isFailedAmount = finalAmount === 999
+          const isFailedAmount = baseAmount === 999 || finalAmount === 999
           const isFailedPhone = mpesaPhone.endsWith('000')
 
           if (isFailedCard || isFailedAmount || isFailedPhone) {
@@ -204,6 +237,7 @@ export default function Donate() {
             )
           } else {
             setCheckoutState('success')
+
             // Save to localStorage
             const stored = localStorage.getItem('npo_donations')
             let list: StoredDonation[] = []
@@ -218,33 +252,51 @@ export default function Donate() {
               list = [...donorFeed] as any[]
             }
 
-            const sanitizedName = sanitizeInput(donorName || 'Anonymous')
-            const sanitizedMessage = donorMessage ? sanitizeInput(donorMessage) : ''
+            const cleanName = sanitizeText(donorName) || 'Anonymous'
+            const cleanMessage = donorMessage ? sanitizeText(donorMessage) : ''
 
-            const initials = sanitizedName
-              ? sanitizedName
-                  .split(' ')
-                  .map((n) => n[0])
-                  .join('')
-                  .toUpperCase()
-              : 'A'
+            const privacyDisplay = anonymizeDonor(
+              {
+                name: cleanName,
+                location: checkoutMethod === 'mpesa' ? 'Nairobi, KE' : 'Austin, TX',
+                amount: donationType === 'monthly' ? `$${baseAmount}/month` : `$${baseAmount}`,
+              },
+              privacyPreference
+            )
+
+            const receipt = generateDonationReceipt({
+              id: Date.now(),
+              donorName: cleanName,
+              donorEmail: donorEmail.trim(),
+              amount: finalAmount,
+              currency: 'USD',
+              paymentMethod: checkoutMethod === 'mpesa' ? 'M-Pesa Mobile Money' : 'Credit Card (Pesapal)',
+              isGiftAidClaimed: claimGiftAid,
+              giftAidAmount: giftAidCalc.giftAidAmount,
+            })
+            setCreatedReceipt(receipt)
+
             const newRecord: StoredDonation = {
               id: Date.now(),
-              name: sanitizedName,
-              location: checkoutMethod === 'mpesa' ? 'Nairobi, KE' : 'Austin, TX',
-              amount: donationType === 'monthly' ? `$${finalAmount}/month` : `$${finalAmount}`,
-              amountNum: finalAmount,
+              name: privacyDisplay.displayName,
+              location: privacyDisplay.displayLocation,
+              amount: donationType === 'monthly' ? `$${baseAmount}/month` : `$${baseAmount}`,
+              amountNum: baseAmount,
               type: donationType,
               time: 'Just now',
-              initials,
+              initials: privacyDisplay.initials,
               gradient: 'linear-gradient(135deg, #2ECC71, #0E6BA8)',
-              date: new Date().toISOString().split('T')[0], // YYYY-MM-DD
-              message: sanitizedMessage,
-              status: 'active'
+              date: new Date().toISOString().split('T')[0],
+              message: cleanMessage,
+              status: 'active',
+              receiptNumber: receipt.receiptNumber,
+              coveredFees: coverFees,
+              giftAidClaimed: claimGiftAid,
+              privacy: privacyPreference,
             }
 
             localStorage.setItem('npo_donations', JSON.stringify([newRecord, ...list]))
-            setFeedItems([newRecord, ...feedItems.filter(item => item.id !== newRecord.id)])
+            setFeedItems([newRecord, ...feedItems.filter((item) => item.id !== newRecord.id)])
             clearSensitiveData()
           }
         }, 1500)
@@ -277,6 +329,7 @@ export default function Donate() {
           {/* Type Toggle */}
           <div className="donate-type-toggle">
             <button
+              type="button"
               className={`donate-type-btn ${donationType === 'monthly' ? 'active' : ''}`}
               onClick={() => setDonationType('monthly')}
               aria-pressed={donationType === 'monthly'}
@@ -284,6 +337,7 @@ export default function Donate() {
               Monthly
             </button>
             <button
+              type="button"
               className={`donate-type-btn ${donationType === 'one-time' ? 'active' : ''}`}
               onClick={() => setDonationType('one-time')}
               aria-pressed={donationType === 'one-time'}
@@ -302,7 +356,7 @@ export default function Donate() {
 
           {donationType === 'monthly' && (
             <div className="donate-impact-note">
-              Your $25/month = $300/year = 1 family's water access for life
+              Your ${baseAmount}/month = ${recurringImpact.annualEquivalent}/year = sustainable clean water for families
             </div>
           )}
 
@@ -331,6 +385,8 @@ export default function Donate() {
               <span className="custom-amount-prefix">$</span>
               <input
                 type="number"
+                min="1"
+                max="100000"
                 className="custom-amount-input"
                 placeholder="Custom amount"
                 value={customAmount}
@@ -338,6 +394,47 @@ export default function Donate() {
                 aria-label="Custom donation amount"
               />
             </div>
+          </div>
+
+          {/* Enhancement: Processing Fee Coverage & Gift Aid Options */}
+          <div className="donation-enhancement-box" style={{
+            background: 'rgba(255, 255, 255, 0.03)',
+            padding: '1rem',
+            borderRadius: '8px',
+            marginBottom: '1.5rem',
+            border: '1px solid rgba(255, 255, 255, 0.08)',
+          }}>
+            <label style={{ display: 'flex', alignItems: 'flex-start', gap: '0.8rem', cursor: 'pointer', marginBottom: '0.8rem' }}>
+              <input
+                type="checkbox"
+                checked={coverFees}
+                onChange={(e) => setCoverFees(e.target.checked)}
+                style={{ marginTop: '0.2rem' }}
+              />
+              <span style={{ fontSize: '0.9rem' }}>
+                <strong>Cover payment processing fees (+${(feeCalc.coveredTotalAmount - baseAmount).toFixed(2)})</strong>
+                <br />
+                <span style={{ color: 'var(--color-text-secondary)', fontSize: '0.8rem' }}>
+                  Ensures 100% of your ${baseAmount} principal reaches projects directly.
+                </span>
+              </span>
+            </label>
+
+            <label style={{ display: 'flex', alignItems: 'flex-start', gap: '0.8rem', cursor: 'pointer' }}>
+              <input
+                type="checkbox"
+                checked={claimGiftAid}
+                onChange={(e) => setClaimGiftAid(e.target.checked)}
+                style={{ marginTop: '0.2rem' }}
+              />
+              <span style={{ fontSize: '0.9rem' }}>
+                <strong>Boost with 25% Gift Aid (+${giftAidCalc.giftAidAmount.toFixed(2)})</strong>
+                <br />
+                <span style={{ color: 'var(--color-text-secondary)', fontSize: '0.8rem' }}>
+                  UK taxpayers allow us to reclaim 25p for every £1 donated at no extra cost to you.
+                </span>
+              </span>
+            </label>
           </div>
 
           {/* Donor Info */}
@@ -366,6 +463,21 @@ export default function Donate() {
                 onChange={(e) => setDonorEmail(e.target.value)}
                 required
               />
+            </div>
+
+            <div className="donate-form-section">
+              <label htmlFor="donor-privacy">Privacy Preference</label>
+              <select
+                id="donor-privacy"
+                className="floating-label-select"
+                value={privacyPreference}
+                onChange={(e) => setPrivacyPreference(e.target.value as PrivacyPreference)}
+                style={{ width: '100%', background: 'rgba(255, 255, 255, 0.05)', color: '#fff', padding: '0.8rem', borderRadius: '6px', border: '1px solid rgba(255, 255, 255, 0.1)' }}
+              >
+                <option value="public" style={{ background: '#1c2833' }}>Public (Show full name on donor feed)</option>
+                <option value="initials_only" style={{ background: '#1c2833' }}>Initials Only (e.g. J.D.)</option>
+                <option value="anonymous" style={{ background: '#1c2833' }}>Anonymous (Hide name completely)</option>
+              </select>
             </div>
 
             <div className="donate-form-section">
@@ -548,11 +660,25 @@ export default function Donate() {
       </section>
 
       {/* Sandbox Checkout Modal */}
-      <Modal isOpen={isCheckoutOpen} onClose={() => { if (checkoutState !== 'connecting' && checkoutState !== 'verifying' && checkoutState !== 'authenticating') handleCloseCheckout() }} ariaLabel="Pesapal Checkout Sandbox">
+      <Modal
+        isOpen={isCheckoutOpen}
+        onClose={() => {
+          if (
+            checkoutState !== 'connecting' &&
+            checkoutState !== 'verifying' &&
+            checkoutState !== 'authenticating'
+          ) {
+            handleCloseCheckout()
+          }
+        }}
+        ariaLabel="Pesapal Checkout Sandbox"
+      >
         <div className="checkout-modal">
           <div className="checkout-header">
             <h3>Pesapal Sandbox Secure Checkout</h3>
-            <p className="text-secondary">Simulating secure checkout for <strong>${finalAmount} {donationType === 'monthly' ? '/ month' : 'one-time'}</strong></p>
+            <p className="text-secondary">
+              Simulating secure checkout for <strong>${finalAmount} {donationType === 'monthly' ? '/ month' : 'one-time'}</strong>
+            </p>
           </div>
 
           {checkoutState === 'idle' && (
@@ -575,7 +701,7 @@ export default function Donate() {
               </div>
 
               {checkoutError && (
-                <div className="checkout-error-banner">
+                <div className="checkout-error-banner" role="alert">
                   {checkoutError}
                 </div>
               )}
@@ -676,10 +802,24 @@ export default function Donate() {
           )}
 
           {checkoutState === 'success' && (
-            <div className="checkout-status success">
+            <div className="checkout-status success" role="status" aria-live="polite">
               <FaCheckCircle className="status-icon" />
               <h4>Payment Successful!</h4>
               <p>Thank you, {donorName || 'Anonymous'}, for your generous donation of <strong>${finalAmount}</strong>. Your payment was verified and processed securely via Pesapal.</p>
+              
+              {createdReceipt && (
+                <div style={{ margin: '1rem 0', display: 'flex', gap: '0.5rem', justifyContent: 'center' }}>
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={() => setShowReceiptModal(true)}
+                    style={{ fontSize: '0.85rem' }}
+                  >
+                    <FaFileInvoiceDollar /> View Official Tax Receipt
+                  </button>
+                </div>
+              )}
+
               <button
                 className="btn btn-primary"
                 onClick={() => {
@@ -698,7 +838,7 @@ export default function Donate() {
           )}
 
           {checkoutState === 'failed' && (
-            <div className="checkout-status failed">
+            <div className="checkout-status failed" role="alert">
               <FaTimesCircle className="status-icon" />
               <h4>Payment Failed</h4>
               <p className="checkout-error-msg">{checkoutError}</p>
@@ -719,6 +859,62 @@ export default function Donate() {
             </div>
           )}
         </div>
+      </Modal>
+
+      {/* Official Tax Receipt Modal */}
+      <Modal
+        isOpen={showReceiptModal}
+        onClose={() => setShowReceiptModal(false)}
+        ariaLabel="Donation Tax Receipt"
+      >
+        {createdReceipt && (
+          <div className="receipt-modal-content" style={{ padding: '1rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
+              <h3 style={{ margin: 0 }}>Official Donation Receipt</h3>
+              <span className="section-tag">{createdReceipt.receiptNumber}</span>
+            </div>
+
+            <pre style={{
+              background: '#0d1520',
+              padding: '1.2rem',
+              borderRadius: '8px',
+              color: '#d1d5db',
+              fontFamily: 'monospace',
+              fontSize: '0.8rem',
+              whiteSpace: 'pre-wrap',
+              maxHeight: '350px',
+              overflowY: 'auto',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
+            }}>
+              {formatReceiptAsText(createdReceipt)}
+            </pre>
+
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.8rem', marginTop: '1rem' }}>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={() => {
+                  const blob = new Blob([formatReceiptAsText(createdReceipt)], { type: 'text/plain;charset=utf-8' })
+                  const url = URL.createObjectURL(blob)
+                  const link = document.createElement('a')
+                  link.href = url
+                  link.download = `${createdReceipt.receiptNumber}.txt`
+                  link.click()
+                  URL.revokeObjectURL(url)
+                }}
+              >
+                <FaPrint /> Download Receipt
+              </button>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => setShowReceiptModal(false)}
+              >
+                Done
+              </button>
+            </div>
+          </div>
+        )}
       </Modal>
     </div>
   )

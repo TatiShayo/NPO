@@ -24,6 +24,9 @@ import Accordion from '../components/ui/Accordion'
 import { faqs } from '../data/faqs'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
 
+import { validateContactForm, validateEmail } from '../utils/formValidation'
+import { sanitizeText } from '../utils/sanitization'
+
 const socialLinks = [
   { icon: <FaFacebookF />, label: 'Facebook', handle: '@AquaHopeFDN' },
   { icon: <FaInstagram />, label: 'Instagram', handle: '@aquahope.fdn' },
@@ -47,9 +50,12 @@ export default function Contact() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    subject: '',
+    phone: '',
+    subject: 'general',
     message: '',
+    honeypot: '',
   })
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
 
@@ -62,18 +68,42 @@ export default function Contact() {
   }, [])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
+    const { name, value } = e.target
+    setFormData((prev) => ({ ...prev, [name]: value }))
+    if (formErrors[name]) {
+      setFormErrors((prev) => {
+        const next = { ...prev }
+        delete next[name]
+        return next
+      })
+    }
   }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    const validation = validateContactForm({
+      name: sanitizeText(formData.name),
+      email: formData.email.trim(),
+      phone: formData.phone.trim(),
+      subject: formData.subject,
+      message: sanitizeText(formData.message),
+      honeypot: formData.honeypot,
+    })
+
+    if (!validation.isValid) {
+      setFormErrors(validation.errors)
+      return
+    }
+
+    setFormErrors({})
     setIsSubmitting(true)
 
     // Mock submission
     setTimeout(() => {
       setIsSubmitting(false)
       setIsSubmitted(true)
-    }, 1500)
+    }, 1200)
   }
 
   return (
@@ -97,7 +127,7 @@ export default function Contact() {
           {/* LEFT: Form */}
           <div className="contact-form-card animate-on-scroll">
             {isSubmitted ? (
-              <div className="contact-success">
+              <div className="contact-success" role="status" aria-live="polite">
                 <div className="contact-success-icon">
                   <FaCheckCircle />
                 </div>
@@ -105,42 +135,118 @@ export default function Contact() {
                 <p className="text-secondary">
                   We'll get back to you within 24 hours.
                 </p>
+                <button
+                  className="btn btn-outline"
+                  style={{ marginTop: '1rem' }}
+                  onClick={() => {
+                    setIsSubmitted(false)
+                    setFormData({ name: '', email: '', phone: '', subject: 'general', message: '', honeypot: '' })
+                  }}
+                >
+                  Send Another Message
+                </button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit}>
-                <Input
-                  label="Full Name"
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                />
-                <Input
-                  label="Email Address"
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                />
-                <Input
-                  label="Subject"
-                  as="select"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  required
-                  options={subjectOptions}
-                />
-                <Input
-                  label="Message"
-                  as="textarea"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                />
+              <form onSubmit={handleSubmit} noValidate>
+                {/* Honeypot field for bot protection (visually hidden) */}
+                <div style={{ position: 'absolute', left: '-9999px', top: '-9999px', opacity: 0, height: 0 }} aria-hidden="true">
+                  <label htmlFor="website-hp">Leave this field blank</label>
+                  <input
+                    type="text"
+                    id="website-hp"
+                    name="honeypot"
+                    tabIndex={-1}
+                    value={formData.honeypot}
+                    onChange={handleChange}
+                    autoComplete="off"
+                  />
+                </div>
+
+                {formErrors.honeypot && (
+                  <div className="checkout-error-banner" role="alert" style={{ marginBottom: '1rem' }}>
+                    {formErrors.honeypot}
+                  </div>
+                )}
+
+                <div className="form-field-wrapper">
+                  <Input
+                    label="Full Name"
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                  />
+                  {formErrors.name && (
+                    <span className="field-error" style={{ color: '#E74C3C', fontSize: '0.8rem', marginTop: '4px', display: 'block' }}>
+                      {formErrors.name}
+                    </span>
+                  )}
+                </div>
+
+                <div className="form-field-wrapper" style={{ marginTop: '1rem' }}>
+                  <Input
+                    label="Email Address"
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                  />
+                  {formErrors.email && (
+                    <span className="field-error" style={{ color: '#E74C3C', fontSize: '0.8rem', marginTop: '4px', display: 'block' }}>
+                      {formErrors.email}
+                    </span>
+                  )}
+                </div>
+
+                <div className="form-field-wrapper" style={{ marginTop: '1rem' }}>
+                  <Input
+                    label="Phone Number (optional)"
+                    type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                  />
+                  {formErrors.phone && (
+                    <span className="field-error" style={{ color: '#E74C3C', fontSize: '0.8rem', marginTop: '4px', display: 'block' }}>
+                      {formErrors.phone}
+                    </span>
+                  )}
+                </div>
+
+                <div className="form-field-wrapper" style={{ marginTop: '1rem' }}>
+                  <Input
+                    label="Subject"
+                    as="select"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    required
+                    options={subjectOptions}
+                  />
+                  {formErrors.subject && (
+                    <span className="field-error" style={{ color: '#E74C3C', fontSize: '0.8rem', marginTop: '4px', display: 'block' }}>
+                      {formErrors.subject}
+                    </span>
+                  )}
+                </div>
+
+                <div className="form-field-wrapper" style={{ marginTop: '1rem' }}>
+                  <Input
+                    label="Message"
+                    as="textarea"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                  />
+                  {formErrors.message && (
+                    <span className="field-error" style={{ color: '#E74C3C', fontSize: '0.8rem', marginTop: '4px', display: 'block' }}>
+                      {formErrors.message}
+                    </span>
+                  )}
+                </div>
 
                 <button
                   type="submit"

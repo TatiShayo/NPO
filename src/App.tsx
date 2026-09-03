@@ -15,9 +15,11 @@ import Donate from './pages/Donate'
 import Contact from './pages/Contact'
 import Dashboard from './pages/Dashboard'
 
+import ErrorBoundary from './components/ui/ErrorBoundary'
+
 export default function App() {
   return (
-    <>
+    <ErrorBoundary>
       {/* Skip to content for accessibility */}
       <a href="#main-content" className="skip-link">Skip to content</a>
 
@@ -26,16 +28,18 @@ export default function App() {
 
       {/* Main Content */}
       <main id="main-content">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/gallery" element={<Gallery />} />
-          <Route path="/donate" element={<Donate />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="*" element={<Home />} />
-        </Routes>
+        <ErrorBoundary>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/gallery" element={<Gallery />} />
+            <Route path="/donate" element={<Donate />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="*" element={<Home />} />
+          </Routes>
+        </ErrorBoundary>
       </main>
 
       {/* Global Footer */}
@@ -44,6 +48,6 @@ export default function App() {
       {/* Floating Widgets */}
       <ScrollToTop />
       <ChatWidget />
-    </>
+    </ErrorBoundary>
   )
 }

@@ -29,7 +29,7 @@ export default function ChatWidget() {
 
   // Auto-scroll to bottom on new messages
   useEffect(() => {
-    if (messagesEndRef.current) {
+    if (messagesEndRef.current && typeof messagesEndRef.current.scrollIntoView === 'function') {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' })
     }
   }, [messages, isTyping])
