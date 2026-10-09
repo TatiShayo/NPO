@@ -93,7 +93,9 @@ export function meetsWcagAAA(
  * Helper to generate accessible aria-describedby IDs.
  */
 export function generateAriaDescribedBy(
-  fieldId: string,
+  // The field id is accepted for call-site symmetry but intentionally unused:
+  // aria-describedby references the error/hint ELEMENTS, not the field itself.
+  _fieldId: string,
   errorId?: string,
   hintId?: string
 ): string | undefined {

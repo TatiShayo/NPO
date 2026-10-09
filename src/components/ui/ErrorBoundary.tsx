@@ -3,7 +3,7 @@
 // Catches render errors gracefully with recovery actions
 // ============================================
 
-import React, { Component, ErrorInfo, ReactNode } from 'react'
+import { Component, ErrorInfo, ReactNode } from 'react'
 import { FaExclamationTriangle, FaRedo, FaHome } from 'react-icons/fa'
 
 interface Props {
@@ -34,7 +34,7 @@ export default class ErrorBoundary extends Component<Props, State> {
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     this.setState({ errorInfo })
     // In production, log to error reporting service
-    if (process.env.NODE_ENV !== 'test') {
+    if (import.meta.env.MODE !== 'test') {
       console.error('[ErrorBoundary caught error]:', error, errorInfo)
     }
   }

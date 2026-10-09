@@ -23,7 +23,6 @@ import {
   FaTimesCircle,
   FaFileInvoiceDollar,
   FaPrint,
-  FaUserSecret,
 } from 'react-icons/fa'
 import { donationAmounts, donorFeed, otherWays } from '../data/donors'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'

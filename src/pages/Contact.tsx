@@ -24,7 +24,7 @@ import Accordion from '../components/ui/Accordion'
 import { faqs } from '../data/faqs'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
 
-import { validateContactForm, validateEmail } from '../utils/formValidation'
+import { validateContactForm } from '../utils/formValidation'
 import { sanitizeText } from '../utils/sanitization'
 
 const socialLinks = [
