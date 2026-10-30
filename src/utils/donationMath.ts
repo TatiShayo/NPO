@@ -1,7 +1,5 @@
-// ============================================
 // Donation Math & Calculation Engine
 // Provides Gift Aid, fee coverage, recurring math & sanitization
-// ============================================
 
 export interface GiftAidCalculation {
   giftAidAmount: number

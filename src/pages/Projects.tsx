@@ -1,6 +1,4 @@
-// ============================================
 // Projects Page — Filterable grid with modal detail
-// ============================================
 
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'

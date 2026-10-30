@@ -1,6 +1,4 @@
-// ============================================
 // WhereMoneyGoes Section — Impact per dollar
-// ============================================
 
 import { FaTint, FaWrench, FaChalkboard, FaHome } from 'react-icons/fa'
 import Button from '../ui/Button'

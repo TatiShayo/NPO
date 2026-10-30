@@ -1,6 +1,4 @@
-// ============================================
 // Badge Component — Reusable badge/pill
-// ============================================
 
 import React from 'react'
 

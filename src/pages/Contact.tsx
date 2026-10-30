@@ -1,6 +1,4 @@
-// ============================================
 // Contact Page — Form, info, social, FAQ
-// ============================================
 
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'

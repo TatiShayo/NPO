@@ -1,7 +1,5 @@
-// ============================================
 // Campaign Goal Progress & Analytics Engine
 // Handles percentage funded, remaining balance, velocity & progress capping
-// ============================================
 
 export interface GoalStatusBadge {
   status: 'funded' | 'near_goal' | 'on_track' | 'urgent' | 'expired'

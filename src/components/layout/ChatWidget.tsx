@@ -1,6 +1,4 @@
-// ============================================
 // ChatWidget Component — Floating support chat
-// ============================================
 
 import { useState, useRef, useEffect } from 'react'
 import { FaCommentDots, FaTimes, FaMinus, FaPaperPlane } from 'react-icons/fa'

@@ -1,6 +1,4 @@
-// ============================================
 // FAQ Data — Mock frequently asked questions
-// ============================================
 
 export const faqs = [
   {

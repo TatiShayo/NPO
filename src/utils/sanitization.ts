@@ -1,7 +1,5 @@
-// ============================================
 // Input Sanitization & Privacy Anonymization Engine
 // Strips script tags, unsafe protocols, and enforces privacy options
-// ============================================
 
 export type PrivacyPreference =
   | 'public'
@@ -29,7 +27,6 @@ export function sanitizeText(input: string | null | undefined): string {
 
   let text = String(input)
 
-  // Remove null bytes and control chars (except newline and tab)
   text = text.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '')
 
   // Strip script tags and their contents
@@ -43,7 +40,6 @@ export function sanitizeText(input: string | null | undefined): string {
   // Strip all HTML tags
   text = text.replace(/<[^>]+>/g, '')
 
-  // Remove javascript: and data: inline expressions
   text = text.replace(/javascript\s*:/gi, '')
   text = text.replace(/vbscript\s*:/gi, '')
   text = text.replace(/data\s*:\s*text\/html/gi, '')

@@ -140,22 +140,18 @@ describe('Donate Page - Sandbox Payment Flow', () => {
       // Pay
       fireEvent.click(screen.getByRole('button', { name: /^Pay \$/i }))
 
-      // 1. Connecting
       expect(screen.getByText('Connecting to Provider...')).toBeInTheDocument()
 
-      // 2. Verifying
       act(() => {
         vi.advanceTimersByTime(1500)
       })
       expect(screen.getByText('Verifying details...')).toBeInTheDocument()
 
-      // 3. Authenticating
       act(() => {
         vi.advanceTimersByTime(1500)
       })
       expect(screen.getByText('Bank Authentication...')).toBeInTheDocument()
 
-      // 4. Success
       act(() => {
         vi.advanceTimersByTime(1500)
       })

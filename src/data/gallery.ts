@@ -1,6 +1,4 @@
-// ============================================
 // Gallery Data — Mock field photos
-// ============================================
 
 export const galleryCategories = [
   'All',

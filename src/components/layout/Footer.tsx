@@ -1,6 +1,4 @@
-// ============================================
 // Footer Component — Global footer with 4 columns
-// ============================================
 
 import { Link } from 'react-router-dom'
 import {

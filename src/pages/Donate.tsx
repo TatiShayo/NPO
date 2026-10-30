@@ -1,7 +1,5 @@
-// ============================================
 // Donate Page — High-conversion donation form
 // With Gift Aid calculation, Fee Coverage, Receipts & Privacy Options
-// ============================================
 
 import { useEffect, useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
@@ -237,7 +235,6 @@ export default function Donate() {
           } else {
             setCheckoutState('success')
 
-            // Save to localStorage
             const stored = localStorage.getItem('npo_donations')
             let list: StoredDonation[] = []
             if (stored) {
@@ -805,7 +802,7 @@ export default function Donate() {
               <FaCheckCircle className="status-icon" />
               <h4>Payment Successful!</h4>
               <p>Thank you, {donorName || 'Anonymous'}, for your generous donation of <strong>${finalAmount}</strong>. Your payment was verified and processed securely via Pesapal.</p>
-              
+
               {createdReceipt && (
                 <div style={{ margin: '1rem 0', display: 'flex', gap: '0.5rem', justifyContent: 'center' }}>
                   <button

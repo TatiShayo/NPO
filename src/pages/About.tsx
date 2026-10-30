@@ -1,6 +1,4 @@
-// ============================================
 // About Page — Story, mission, timeline, team
-// ============================================
 
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'

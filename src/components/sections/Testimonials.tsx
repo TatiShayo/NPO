@@ -1,6 +1,4 @@
-// ============================================
 // Testimonials Section — Auto-advancing carousel
-// ============================================
 
 import { useState, useEffect, useCallback } from 'react'
 import { testimonials } from '../../data/testimonials'

@@ -1,8 +1,4 @@
-// ============================================
 // Input Component — Reusable floating-label input
-// ============================================
-
-
 
 interface Option {
   value: string

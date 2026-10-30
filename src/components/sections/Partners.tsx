@@ -1,6 +1,4 @@
-// ============================================
 // Partners Section — Infinite scrolling marquee
-// ============================================
 
 const partners = [
   { name: 'USAID', initials: 'UA', gradient: 'linear-gradient(135deg, #0E6BA8, #36A2EB)' },

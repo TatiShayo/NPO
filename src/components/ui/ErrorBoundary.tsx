@@ -1,7 +1,5 @@
-// ============================================
 // ErrorBoundary Component — UX Resilience & Recovery
 // Catches render errors gracefully with recovery actions
-// ============================================
 
 import { Component, ErrorInfo, ReactNode } from 'react'
 import { FaExclamationTriangle, FaRedo, FaHome } from 'react-icons/fa'

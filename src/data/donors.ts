@@ -1,6 +1,4 @@
-// ============================================
 // Donor Feed Data — Mock real-time donor feed
-// ============================================
 
 export const donorFeed = [
   {

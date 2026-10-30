@@ -1,6 +1,4 @@
-// ============================================
 // Card Component — Reusable glassmorphism card
-// ============================================
 
 import React from 'react'
 

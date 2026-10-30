@@ -1,6 +1,4 @@
-// ============================================
 // Pillars Section — Four interactive pillar cards
-// ============================================
 
 import { FaTint, FaSeedling, FaGraduationCap, FaHeartbeat } from 'react-icons/fa'
 import { Link } from 'react-router-dom'

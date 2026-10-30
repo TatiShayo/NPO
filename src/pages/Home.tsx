@@ -1,6 +1,4 @@
-// ============================================
 // Home Page — Landing page assembling all sections
-// ============================================
 
 import { useEffect } from 'react'
 import Hero from '../components/sections/Hero'

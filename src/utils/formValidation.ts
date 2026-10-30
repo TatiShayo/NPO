@@ -1,7 +1,5 @@
-// ============================================
 // Form Validation & Anti-Spam Utility
 // RFC email checking, East African/Intl phone validation, honeypot detection
-// ============================================
 
 export interface ValidationResult {
   isValid: boolean

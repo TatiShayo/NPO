@@ -79,7 +79,6 @@ describe('Donation Math & Calculation Engine', () => {
       // (100 + 0.30) / (1 - 0.029) = 100.30 / 0.971 = 103.29557... -> 103.30
       expect(res.coveredTotalAmount).toBe(103.30)
 
-      // Verify that after taking 2.9% + 0.30 from 103.30, charity receives approx 100
       const feeOnCovered = 103.30 * 0.029 + 0.30 // 2.9957 + 0.30 = 3.2957
       const netOnCovered = 103.30 - feeOnCovered
       expect(Math.round(netOnCovered)).toBe(100)

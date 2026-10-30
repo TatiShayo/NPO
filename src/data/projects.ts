@@ -1,6 +1,4 @@
-// ============================================
 // Project Data — Mock data for projects portfolio
-// ============================================
 
 export const projects = [
   {

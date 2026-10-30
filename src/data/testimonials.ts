@@ -1,6 +1,4 @@
-// ============================================
 // Testimonials Data — Mock beneficiary quotes
-// ============================================
 
 export const testimonials = [
   {

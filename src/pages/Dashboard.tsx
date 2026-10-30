@@ -1,6 +1,4 @@
-// ============================================
 // Dashboard Page — Donation Analytics & Management
-// ============================================
 
 import { useEffect, useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
@@ -56,17 +54,15 @@ export default function Dashboard() {
 
   useEffect(() => {
     document.title = 'Donation Dashboard — AquaHope Foundation'
-    
+
     // Seed and load donations from localStorage
     const stored = localStorage.getItem('npo_donations')
     if (stored) {
       try {
         const parsed = JSON.parse(stored) as Donation[]
-        // Ensure all stored donations have the necessary fields for stats
         const validated = parsed.map((d, index) => {
-          // Parse amount number if missing
           const amountNum = d.amountNum || parseInt(d.amount.replace(/[^0-9]/g, '')) || 25
-          
+
           // Generate a past date if missing to create a nice time series chart
           let date = d.date
           if (!date) {

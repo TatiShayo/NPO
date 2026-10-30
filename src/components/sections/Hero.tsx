@@ -1,6 +1,4 @@
-// ============================================
 // Hero Section — Full-viewport animated hero
-// ============================================
 
 import { useEffect, useState, useMemo } from 'react'
 import Button from '../ui/Button'

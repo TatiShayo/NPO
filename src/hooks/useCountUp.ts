@@ -1,7 +1,5 @@
-// ============================================
 // useCountUp Hook
 // Animates a number from 0 to target when triggered
-// ============================================
 
 import { useEffect, useRef, useState } from 'react'
 

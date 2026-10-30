@@ -1,6 +1,4 @@
-// ============================================
 // Newsletter Section — Glassmorphism subscribe card
-// ============================================
 
 import { useState } from 'react'
 import { FaPaperPlane, FaLock } from 'react-icons/fa'

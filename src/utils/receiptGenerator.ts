@@ -1,7 +1,5 @@
-// ============================================
 // Receipt & Invoice Generation Engine
 // Generates verifiable sequential receipts with tax deductibility metadata
-// ============================================
 
 export interface DonationReceiptInput {
   id: string | number

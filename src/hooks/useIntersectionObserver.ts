@@ -1,7 +1,5 @@
-// ============================================
 // useIntersectionObserver Hook
 // Triggers animations when elements scroll into view
-// ============================================
 
 import { useEffect, useRef, useState } from 'react'
 

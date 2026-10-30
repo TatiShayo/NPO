@@ -1,6 +1,4 @@
-// ============================================
 // Stats Section — Animated count-up impact stats
-// ============================================
 
 import { FaUsers, FaWater, FaSchool, FaHandsHelping } from 'react-icons/fa'
 import Counter from '../ui/Counter'

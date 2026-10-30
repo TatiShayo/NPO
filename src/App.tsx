@@ -1,6 +1,4 @@
-// ============================================
 // App Component — Router + global layout
-// ============================================
 
 import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/layout/Navbar'

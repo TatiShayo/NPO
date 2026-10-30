@@ -1,7 +1,5 @@
-// ============================================
 // Accessibility & WCAG Color Contrast Utility
 // Provides luminance, contrast ratio calculation & ARIA helpers
-// ============================================
 
 /**
  * Converts a hex color string (#RGB or #RRGGBB) to sRGB [r, g, b] array in 0..1 range.

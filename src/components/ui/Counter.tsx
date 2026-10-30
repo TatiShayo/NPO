@@ -1,6 +1,4 @@
-// ============================================
 // Counter Component — Animated count-up number
-// ============================================
 
 import { useCountUp } from '../../hooks/useCountUp'
 import { useIntersectionObserver } from '../../hooks/useIntersectionObserver'

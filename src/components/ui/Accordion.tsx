@@ -1,6 +1,4 @@
-// ============================================
 // Accordion Component — Reusable expandable FAQ item
-// ============================================
 
 import { useState, useRef } from 'react'
 import { FaChevronDown } from 'react-icons/fa'

@@ -92,7 +92,7 @@ describe('Dashboard Page - Analytics & Subscription Management', () => {
     // Count (total array length = 4)
     // Average (rounded total / count = 175 / 4 = 44)
     // Active Monthly Supporters (type === 'monthly' && status === 'active' -> Bob = 1)
-    
+
     expect(screen.getByText('$175')).toBeInTheDocument() // Total
     expect(screen.getByText('4')).toBeInTheDocument() // Total Contributions
     expect(screen.getByText('$44')).toBeInTheDocument() // Average
@@ -122,19 +122,17 @@ describe('Dashboard Page - Analytics & Subscription Management', () => {
       </MemoryRouter>
     )
 
-    // 1. Pause Bob's active subscription (id: 2)
     const bobRow = screen.getByText('Bob').closest('tr')!
     const pauseBtn = within(bobRow).getByRole('button', { name: /Pause/i })
     fireEvent.click(pauseBtn)
 
     // Verify Bob's status is updated to Paused in UI and localStorage
     expect(within(bobRow).getByText('Paused')).toBeInTheDocument()
-    
+
     let donations = JSON.parse(localStorage.getItem('npo_donations')!)
     let bob = donations.find((d: any) => d.name === 'Bob')
     expect(bob.status).toBe('paused')
 
-    // 2. Resume Bob's paused subscription
     const resumeBtn = within(bobRow).getByRole('button', { name: /Resume/i })
     fireEvent.click(resumeBtn)
     expect(within(bobRow).getByText('Active')).toBeInTheDocument()
@@ -143,7 +141,6 @@ describe('Dashboard Page - Analytics & Subscription Management', () => {
     bob = donations.find((d: any) => d.name === 'Bob')
     expect(bob.status).toBe('active')
 
-    // 3. Cancel Bob's subscription
     const cancelBtn = within(bobRow).getByRole('button', { name: /Cancel/i })
     fireEvent.click(cancelBtn)
     expect(within(bobRow).getByText('Cancelled')).toBeInTheDocument()
@@ -156,7 +153,6 @@ describe('Dashboard Page - Analytics & Subscription Management', () => {
     // Wait, the stats calculation should recalculate upon change in donations state:
     expect(screen.getByText('$125')).toBeInTheDocument()
 
-    // 4. Reactivate David's cancelled subscription (id: 4)
     const davidRow = screen.getByText('David').closest('tr')!
     const reactivateBtn = within(davidRow).getByRole('button', { name: /Reactivate/i })
     fireEvent.click(reactivateBtn)

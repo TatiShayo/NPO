@@ -1,8 +1,6 @@
-// ============================================
 // useScrollAnimation Hook
 // Adds 'is-visible' class to elements with 'animate-on-scroll'
 // when they enter the viewport
-// ============================================
 
 import { useEffect } from 'react'
 

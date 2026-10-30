@@ -1,6 +1,4 @@
-// ============================================
 // Navbar Component — Sticky nav with scroll frosted glass
-// ============================================
 
 import { useState, useEffect } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'

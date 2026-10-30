@@ -1,6 +1,4 @@
-// ============================================
 // FeaturedProjects Section — Horizontal carousel
-// ============================================
 
 import { useRef, useState, useEffect } from 'react'
 import { FaChevronLeft, FaChevronRight, FaMapMarkerAlt, FaArrowRight } from 'react-icons/fa'
@@ -57,7 +55,6 @@ export default function FeaturedProjects() {
     })
   }
 
-  // Update active dot on scroll
   useEffect(() => {
     const track = trackRef.current
     if (!track) return
